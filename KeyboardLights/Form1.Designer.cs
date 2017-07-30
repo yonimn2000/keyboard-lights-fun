@@ -267,7 +267,7 @@
             // 
             // startStopBTN
             // 
-            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startStopBTN.Location = new System.Drawing.Point(97, 110);
             this.startStopBTN.Name = "startStopBTN";
             this.startStopBTN.Size = new System.Drawing.Size(98, 37);
@@ -289,6 +289,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Lights";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.repeatsUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedUD)).EndInit();
