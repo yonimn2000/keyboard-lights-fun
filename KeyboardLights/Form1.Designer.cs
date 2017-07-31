@@ -145,10 +145,10 @@
             this.radioButton9.AutoSize = true;
             this.radioButton9.Location = new System.Drawing.Point(43, 88);
             this.radioButton9.Name = "radioButton9";
-            this.radioButton9.Size = new System.Drawing.Size(31, 17);
+            this.radioButton9.Size = new System.Drawing.Size(32, 17);
             this.radioButton9.TabIndex = 8;
             this.radioButton9.TabStop = true;
-            this.radioButton9.Text = "9";
+            this.radioButton9.Text = "A";
             this.radioButton9.UseVisualStyleBackColor = true;
             // 
             // radioButton10

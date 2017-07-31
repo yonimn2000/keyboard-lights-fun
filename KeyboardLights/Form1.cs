@@ -72,9 +72,35 @@ namespace KeyboardLights
             lastState = (keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0);
 
             SetKeys(000);
-            for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                for (int j = 0; j < patterns[pattern].Count; j++)
-                    SetKeys(patterns[pattern][j]);
+            switch (pattern)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                        for (int j = 0; j < patterns[pattern].Count; j++)
+                            SetKeys(patterns[pattern][j]);
+                    break;
+                case 9:
+                    for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                        for (int k = 0; k < 8; k++)
+                            for (int j = 0; j < patterns[k].Count; j++)
+                                SetKeys(patterns[k][j]);
+                    break;
+                case 10:
+                    {
+                        Random r = new Random();
+                        for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                            SetKeys(r.Next(2) * 100 + r.Next(2) * 10 + r.Next(2));
+                    }
+                    break;
+            }
             SetKeys(000);
         }
 
