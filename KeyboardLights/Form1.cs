@@ -12,6 +12,11 @@ namespace KeyboardLights
         private void MainForm_Load(object sender, EventArgs e)
         {
             patternsCollection.SelectedIndex = 0;
+            speedUD.Value = Properties.Settings.Default.Speed;
+            repeatsUD.Value = Properties.Settings.Default.Repeats;
+            patternsCollection.SelectedIndex = Properties.Settings.Default.SelectionIndex;
+            continiousCB.Checked = Properties.Settings.Default.IsContinious;
+
             patterns[0] = new List<int>() { 100, 010, 001, 010 };
             patterns[1] = new List<int>() { 100, 010, 001 };
             patterns[2] = new List<int>() { 001, 010, 100 };
@@ -65,7 +70,7 @@ namespace KeyboardLights
             keysStartState = isOn;
             lastState = (keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0);
 
-            SetKeys(000,false);
+            SetKeys(000, false);
             switch (selectedPattern)
             {
                 case 0:
@@ -90,11 +95,11 @@ namespace KeyboardLights
                 case 8:
                 case 9:
                     for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                        for (int j = 0; j < patterns[selectedPattern-1].Count; j++)
-                            SetKeys(patterns[selectedPattern-1][j]);
+                        for (int j = 0; j < patterns[selectedPattern - 1].Count; j++)
+                            SetKeys(patterns[selectedPattern - 1][j]);
                     break;
             }
-            SetKeys(000,false);
+            SetKeys(000, false);
         }
 
         void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -126,6 +131,11 @@ namespace KeyboardLights
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Properties.Settings.Default.Speed = speedUD.Value;
+            Properties.Settings.Default.Repeats = repeatsUD.Value;
+            Properties.Settings.Default.SelectionIndex = patternsCollection.SelectedIndex;
+            Properties.Settings.Default.IsContinious = continiousCB.Checked;
+            Properties.Settings.Default.Save();
             SetKeys((keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0), false);
         }
 
