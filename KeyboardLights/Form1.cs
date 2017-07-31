@@ -11,6 +11,7 @@ namespace KeyboardLights
         List<int>[] patterns = new List<int>[9];
         private void MainForm_Load(object sender, EventArgs e)
         {
+            patternsCollection.SelectedIndex = 0;
             patterns[0] = new List<int>() { 100, 010, 001, 010 };
             patterns[1] = new List<int>() { 100, 010, 001 };
             patterns[2] = new List<int>() { 001, 010, 100 };
@@ -32,12 +33,13 @@ namespace KeyboardLights
         bool[] keysStartState = new bool[3];
         int lastState = 000;
         BackgroundWorker bgWorker;
+        int selectedPattern;
         private void startStopBTN_Click(object sender, EventArgs e)
         {
             if (startStopBTN.Text.Equals("Start"))
             {
                 startStopBTN.Text = "Working";
-                patternGroup.Enabled = false;
+                patternsCollection.Enabled = false;
                 configGroup.Enabled = false;
                 startStopBTN.Enabled = false;
                 bgWorker = new BackgroundWorker();
@@ -52,30 +54,33 @@ namespace KeyboardLights
         {
             SetKeys((keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0), false);
             startStopBTN.Text = "Start";
-            patternGroup.Enabled = true;
+            patternsCollection.Enabled = true;
             configGroup.Enabled = true;
             startStopBTN.Enabled = true;
         }
 
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            int pattern = 1;
-            RadioButton[] radios = { radioButton1, radioButton2, radioButton2, radioButton3, radioButton4, radioButton5, radioButton6, radioButton7, radioButton8, radioButton9, radioButton10 };
-            for (int i = 0; i < radios.Length; i++)
-                if (radios[i].Checked)
-                {
-                    pattern = i;
-                    break;
-                }
             bool[] isOn = { (((ushort)GetKeyState(0x90)) & 0xffff) != 0, (((ushort)GetKeyState(0x14)) & 0xffff) != 0, (((ushort)GetKeyState(0x91)) & 0xffff) != 0 };
             keysStartState = isOn;
             lastState = (keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0);
 
-            SetKeys(000);
-            switch (pattern)
+            SetKeys(000,false);
+            switch (selectedPattern)
             {
                 case 0:
+                    {
+                        Random r = new Random();
+                        for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                            SetKeys(r.Next(2) * 100 + r.Next(2) * 10 + r.Next(2));
+                    }
+                    break;
                 case 1:
+                    for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                        for (int k = 0; k < 8; k++)
+                            for (int j = 0; j < patterns[k].Count; j++)
+                                SetKeys(patterns[k][j]);
+                    break;
                 case 2:
                 case 3:
                 case 4:
@@ -83,25 +88,13 @@ namespace KeyboardLights
                 case 6:
                 case 7:
                 case 8:
-                    for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                        for (int j = 0; j < patterns[pattern].Count; j++)
-                            SetKeys(patterns[pattern][j]);
-                    break;
                 case 9:
                     for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                        for (int k = 0; k < 8; k++)
-                            for (int j = 0; j < patterns[k].Count; j++)
-                                SetKeys(patterns[k][j]);
-                    break;
-                case 10:
-                    {
-                        Random r = new Random();
-                        for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                            SetKeys(r.Next(2) * 100 + r.Next(2) * 10 + r.Next(2));
-                    }
+                        for (int j = 0; j < patterns[selectedPattern-1].Count; j++)
+                            SetKeys(patterns[selectedPattern-1][j]);
                     break;
             }
-            SetKeys(000);
+            SetKeys(000,false);
         }
 
         void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -134,6 +127,11 @@ namespace KeyboardLights
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             SetKeys((keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0), false);
+        }
+
+        private void patternsCollection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedPattern = patternsCollection.SelectedIndex;
         }
     }
 
