@@ -8,24 +8,43 @@ namespace KeyboardLights
 {
     public partial class MainForm : Form
     {
-        List<int>[] patterns = new List<int>[9];
+        public struct Pattern
+        {
+            public List<int> pattern;
+            public int reverseNum;//-1 if no reverse. -2 if is reverse
+            public string name;
+            public Pattern(List<int> _pattern, int _reverseNum, string _name)
+            {
+                pattern = _pattern;
+                reverseNum = _reverseNum;
+                name = _name;
+            }
+        }
+
+        List<Pattern> patterns = new List<Pattern>();
+        List<Pattern> reversePatterns = new List<Pattern>();
+
         private void MainForm_Load(object sender, EventArgs e)
         {
-            patternsCollection.SelectedIndex = 0;
+            patterns.Add(new Pattern(new List<int>() { 100, 010, 001, 010 }, -1, "TBD"));
+            patterns.Add(new Pattern(new List<int>() { 101, 010 }, -1, "Inside Out"));
+            patterns.Add(new Pattern(new List<int>() { 110, 011 }, -1, "Dance"));
+            patterns.Add(new Pattern(new List<int>() { 100, 010, 001 }, 0, "Dot"));
+            patterns.Add(new Pattern(new List<int>() { 100, 010, 001, 000 }, 1, "Dot With Blank"));
+            patterns.Add(new Pattern(new List<int>() { 100, 110, 111, 011, 001, 000 }, 2, "Bar"));
+
+            reversePatterns.Add(new Pattern(new List<int>() { 001, 010, 100 }, -2, "Dot (Reverse)"));//0
+            reversePatterns.Add(new Pattern(new List<int>() { 001, 010, 100, 000 }, -2, "Dot With Blank (Reverse)"));//1
+            reversePatterns.Add(new Pattern(new List<int>() { 001, 011, 111, 110, 100, 000 }, -2, "Bar (Reverse)"));//2
+
+            for (int i = 0; i < patterns.Count; i++)
+                patternsCollection.Items.Add(patterns[i].name);
+
             speedUD.Value = Properties.Settings.Default.Speed;
             repeatsUD.Value = Properties.Settings.Default.Repeats;
             patternsCollection.SelectedIndex = Properties.Settings.Default.SelectionIndex;
             continiousCB.Checked = Properties.Settings.Default.IsContinious;
-
-            patterns[0] = new List<int>() { 100, 010, 001, 010 };
-            patterns[1] = new List<int>() { 100, 010, 001 };
-            patterns[2] = new List<int>() { 001, 010, 100 };
-            patterns[3] = new List<int>() { 101, 010 };
-            patterns[4] = new List<int>() { 110, 011 };
-            patterns[5] = new List<int>() { 100, 010, 001, 000 };
-            patterns[6] = new List<int>() { 001, 010, 100, 000 };
-            patterns[7] = new List<int>() { 100, 110, 111, 011, 001, 000 };
-            patterns[8] = new List<int>() { 001, 011, 111, 110, 100, 000 };
+            ReverseCB.Checked = Properties.Settings.Default.IsReverse;
         }
 
         public MainForm()
@@ -39,6 +58,7 @@ namespace KeyboardLights
         int lastState = 000;
         BackgroundWorker bgWorker;
         int selectedPattern;
+        const int numOfItemsBeforeThePatterns = 2;//The number of things in the ComboBox before the patterns.
         private void startStopBTN_Click(object sender, EventArgs e)
         {
             if (startStopBTN.Text.Equals("Start"))
@@ -47,6 +67,7 @@ namespace KeyboardLights
                 patternsCollection.Enabled = false;
                 configGroup.Enabled = false;
                 startStopBTN.Enabled = false;
+                ReverseCB.Enabled = false;
                 bgWorker = new BackgroundWorker();
                 bgWorker.WorkerSupportsCancellation = true;
                 bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
@@ -62,6 +83,7 @@ namespace KeyboardLights
             patternsCollection.Enabled = true;
             configGroup.Enabled = true;
             startStopBTN.Enabled = true;
+            SetReverseCB();
         }
 
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -73,18 +95,18 @@ namespace KeyboardLights
             SetKeys(000, false);
             switch (selectedPattern)
             {
-                case 0:
+                case 0://Random
                     {
                         Random r = new Random();
-                        for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                        for (int i = 0; i < (int)repeatsUD.Value * 10 || continiousCB.Checked; i++)
                             SetKeys(r.Next(2) * 100 + r.Next(2) * 10 + r.Next(2));
                     }
                     break;
-                case 1:
-                    for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                        for (int k = 0; k < 8; k++)
-                            for (int j = 0; j < patterns[k].Count; j++)
-                                SetKeys(patterns[k][j]);
+                case 1://All
+                    for (int k = 0; k < patterns.Count; k++)
+                        for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
+                            for (int j = 0; j < patterns[k].pattern.Count; j++)
+                                SetKeys(patterns[k].pattern[j]);
                     break;
                 case 2:
                 case 3:
@@ -95,8 +117,12 @@ namespace KeyboardLights
                 case 8:
                 case 9:
                     for (int i = 0; i < (int)repeatsUD.Value || continiousCB.Checked; i++)
-                        for (int j = 0; j < patterns[selectedPattern - 1].Count; j++)
-                            SetKeys(patterns[selectedPattern - 1][j]);
+                        if (!ReverseCB.Checked)
+                            for (int j = 0; j < patterns[selectedPattern - numOfItemsBeforeThePatterns].pattern.Count; j++)
+                                SetKeys(patterns[selectedPattern - numOfItemsBeforeThePatterns].pattern[j]);
+                        else
+                            for (int j = 0; j < reversePatterns[patterns[selectedPattern - numOfItemsBeforeThePatterns].reverseNum].pattern.Count; j++)
+                                SetKeys(reversePatterns[patterns[selectedPattern - numOfItemsBeforeThePatterns].reverseNum].pattern[j]);
                     break;
             }
             SetKeys(000, false);
@@ -135,6 +161,7 @@ namespace KeyboardLights
             Properties.Settings.Default.Repeats = repeatsUD.Value;
             Properties.Settings.Default.SelectionIndex = patternsCollection.SelectedIndex;
             Properties.Settings.Default.IsContinious = continiousCB.Checked;
+            Properties.Settings.Default.IsReverse = ReverseCB.Checked;
             Properties.Settings.Default.Save();
             SetKeys((keysStartState[0] ? 1 : 0) * 100 + (keysStartState[1] ? 1 : 0) * 10 + (keysStartState[2] ? 1 : 0), false);
         }
@@ -142,6 +169,15 @@ namespace KeyboardLights
         private void patternsCollection_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedPattern = patternsCollection.SelectedIndex;
+            SetReverseCB();
+        }
+
+        private void SetReverseCB()
+        {
+            if (selectedPattern >= 2)
+                ReverseCB.Enabled = patterns[selectedPattern - numOfItemsBeforeThePatterns].reverseNum >= 0;
+            else
+                ReverseCB.Enabled = false;
         }
     }
 

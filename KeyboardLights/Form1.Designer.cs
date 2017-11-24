@@ -36,6 +36,7 @@
             this.continiousCB = new System.Windows.Forms.CheckBox();
             this.startStopBTN = new System.Windows.Forms.Button();
             this.patternsCollection = new System.Windows.Forms.ComboBox();
+            this.ReverseCB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.repeatsUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedUD)).BeginInit();
             this.configGroup.SuspendLayout();
@@ -128,9 +129,9 @@
             // startStopBTN
             // 
             this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startStopBTN.Location = new System.Drawing.Point(117, 39);
+            this.startStopBTN.Location = new System.Drawing.Point(117, 62);
             this.startStopBTN.Name = "startStopBTN";
-            this.startStopBTN.Size = new System.Drawing.Size(99, 58);
+            this.startStopBTN.Size = new System.Drawing.Size(99, 35);
             this.startStopBTN.TabIndex = 16;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
@@ -142,20 +143,23 @@
             this.patternsCollection.FormattingEnabled = true;
             this.patternsCollection.Items.AddRange(new object[] {
             "Random",
-            "All",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8"});
+            "All"});
             this.patternsCollection.Location = new System.Drawing.Point(117, 12);
             this.patternsCollection.Name = "patternsCollection";
             this.patternsCollection.Size = new System.Drawing.Size(99, 21);
             this.patternsCollection.TabIndex = 17;
             this.patternsCollection.SelectedIndexChanged += new System.EventHandler(this.patternsCollection_SelectedIndexChanged);
+            // 
+            // ReverseCB
+            // 
+            this.ReverseCB.AutoSize = true;
+            this.ReverseCB.Enabled = false;
+            this.ReverseCB.Location = new System.Drawing.Point(117, 39);
+            this.ReverseCB.Name = "ReverseCB";
+            this.ReverseCB.Size = new System.Drawing.Size(103, 17);
+            this.ReverseCB.TabIndex = 18;
+            this.ReverseCB.Text = "Reverse Pattern";
+            this.ReverseCB.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -163,6 +167,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(225, 107);
+            this.Controls.Add(this.ReverseCB);
             this.Controls.Add(this.patternsCollection);
             this.Controls.Add(this.configGroup);
             this.Controls.Add(this.startStopBTN);
@@ -177,6 +182,7 @@
             this.configGroup.ResumeLayout(false);
             this.configGroup.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -189,6 +195,7 @@
         private System.Windows.Forms.CheckBox continiousCB;
         private System.Windows.Forms.Button startStopBTN;
         private System.Windows.Forms.ComboBox patternsCollection;
+        private System.Windows.Forms.CheckBox ReverseCB;
     }
 }
 
