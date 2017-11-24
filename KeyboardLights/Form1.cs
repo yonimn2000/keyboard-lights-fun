@@ -32,10 +32,12 @@ namespace KeyboardLights
             patterns.Add(new Pattern(new List<int>() { 100, 010, 001 }, 0, "Dot"));
             patterns.Add(new Pattern(new List<int>() { 100, 010, 001, 000 }, 1, "Dot With Blank"));
             patterns.Add(new Pattern(new List<int>() { 100, 110, 111, 011, 001, 000 }, 2, "Bar"));
+            patterns.Add(new Pattern(new List<int>() { 111, 011, 101, 110, 111 }, 3, "Inverse Dot"));
 
             reversePatterns.Add(new Pattern(new List<int>() { 001, 010, 100 }, -2, "Dot (Reverse)"));//0
             reversePatterns.Add(new Pattern(new List<int>() { 001, 010, 100, 000 }, -2, "Dot With Blank (Reverse)"));//1
             reversePatterns.Add(new Pattern(new List<int>() { 001, 011, 111, 110, 100, 000 }, -2, "Bar (Reverse)"));//2
+            reversePatterns.Add(new Pattern(new List<int>() { 111, 110, 101, 011, 111 }, -2, "Inverse Dot (Reverse)"));//3
 
             for (int i = 0; i < patterns.Count; i++)
                 patternsCollection.Items.Add(patterns[i].name);
