@@ -1,4 +1,4 @@
-﻿namespace KeyboardLights
+﻿namespace YonatanMankovich.KeyboardLightsFun
 {
     partial class MainForm
     {

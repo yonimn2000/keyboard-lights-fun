@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace KeyboardLights
+namespace YonatanMankovich.KeyboardLightsFun
 {
     public partial class MainForm : Form
     {

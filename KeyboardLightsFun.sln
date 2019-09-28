@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardLights", "KeyboardLights\KeyboardLights.csproj", "{8CE5DFE0-4893-4C93-99A4-9A5A8A9495A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardLightsFun", "KeyboardLightsFun\KeyboardLightsFun.csproj", "{8CE5DFE0-4893-4C93-99A4-9A5A8A9495A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
