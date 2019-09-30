@@ -45,6 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pattern.cs" />
+    <Compile Include="PatternListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatternListForm.Designer.cs">
+      <DependentUpon>PatternListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToggleableKey.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,8 +61,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToggleableKeyStates.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatternListForm.resx">
+      <DependentUpon>PatternListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
