@@ -45,7 +45,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void previewBTN_Click(object sender, EventArgs e)
         {
             UpdatePattern();
-            Pattern.Show((int)previewSpeedNUD.Value * 100);
+            Pattern.StartShow((int)previewSpeedNUD.Value * 100);
         }
 
         private void nameTB_TextChanged(object sender, EventArgs e)
