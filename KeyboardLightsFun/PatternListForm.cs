@@ -13,8 +13,9 @@ namespace YonatanMankovich.KeyboardLightsFun
             InitializeComponent();
             DialogResult = DialogResult.Cancel;
             Patterns = new List<Pattern>(patterns);
-            foreach (Pattern pattern in patterns)
-                patternsLB.Items.Add(pattern.Name);
+            foreach (Pattern pattern in Patterns)
+                patternsLB.Items.Add(pattern);
+            patternsLB.SelectedIndex = 0;
         }
 
         private void removeBTN_Click(object sender, EventArgs e)
@@ -47,11 +48,6 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void editBTN_Click(object sender, EventArgs e)
         {
-            EditSelectedPattern();
-        }
-
-        private void EditSelectedPattern()
-        {
             if (patternsLB.SelectedIndex >= 0)
             {
                 PatternEditorForm patternEditorForm = new PatternEditorForm(Patterns[patternsLB.SelectedIndex]);
@@ -59,7 +55,7 @@ namespace YonatanMankovich.KeyboardLightsFun
                 if (patternListDialogResult == DialogResult.OK) // AKA "Save"
                 {
                     Patterns[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
-                    patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern.Name;
+                    patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
                 }
                 patternEditorForm.Dispose();
             }
@@ -70,16 +66,27 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         }
 
-        private void patternsLB_SelectedIndexChanged(object sender, EventArgs e)
+        private void patternsLB_MouseDown(object sender, MouseEventArgs e)
         {
-            if (patternsLB.SelectedIndex >= 0)
-                editBTN.Enabled = true;
+            if (patternsLB.SelectedItem == null) return;
+            patternsLB.DoDragDrop(patternsLB.SelectedItem, DragDropEffects.Move);
         }
 
-        private void patternsLB_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void patternsLB_DragDrop(object sender, DragEventArgs e)
         {
-            if (patternsLB.IndexFromPoint(e.Location) >= 0)
-                EditSelectedPattern();
+            int index = patternsLB.IndexFromPoint(patternsLB.PointToClient(new System.Drawing.Point(e.X, e.Y)));
+            if (index < 0)
+                index = patternsLB.Items.Count - 1;
+            Pattern data = (Pattern)e.Data.GetData(typeof(Pattern));
+            Patterns.Remove(data);
+            patternsLB.Items.Remove(data);
+            Patterns.Insert(index, data);
+            patternsLB.Items.Insert(index, data);
+        }
+
+        private void patternsLB_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
         }
     }
 }

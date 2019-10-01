@@ -42,6 +42,7 @@
             // 
             // patternsLB
             // 
+            this.patternsLB.AllowDrop = true;
             this.patternsLB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -50,13 +51,13 @@
             this.patternsLB.Name = "patternsLB";
             this.patternsLB.Size = new System.Drawing.Size(200, 199);
             this.patternsLB.TabIndex = 0;
-            this.patternsLB.SelectedIndexChanged += new System.EventHandler(this.patternsLB_SelectedIndexChanged);
-            this.patternsLB.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.patternsLB_MouseDoubleClick);
+            this.patternsLB.DragDrop += new System.Windows.Forms.DragEventHandler(this.patternsLB_DragDrop);
+            this.patternsLB.DragOver += new System.Windows.Forms.DragEventHandler(this.patternsLB_DragOver);
+            this.patternsLB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patternsLB_MouseDown);
             // 
             // editBTN
             // 
             this.editBTN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editBTN.Enabled = false;
             this.editBTN.Location = new System.Drawing.Point(3, 3);
             this.editBTN.Name = "editBTN";
             this.editBTN.Size = new System.Drawing.Size(60, 24);
