@@ -59,9 +59,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void previewBTN_Click(object sender, EventArgs e)
         {
             if (patternPreviewBW.IsBusy)
-            {
                 patternPreviewBW.CancelAsync();
-            }
             else
             {
                 UpdatePattern();
@@ -73,13 +71,11 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void patternPreviewBW_DoWork(object sender, DoWorkEventArgs e)
         {
-            Pattern.StartShow((int)previewSpeedNUD.Value * 100, patternPreviewBW);
+            Pattern.StartShow(1000 / (int)previewSpeedNUD.Value, patternPreviewBW);
         }
 
         private void patternPreviewBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(e.ProgressPercentage);
-            System.Diagnostics.Debug.WriteLine((int)(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100));
             patternGV.ClearSelection();
             if (e.ProgressPercentage > 0)
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 
@@ -24,15 +25,8 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 backgroundWorker.ReportProgress((i + 1) * 100 / StatesList.Count);
                 ToggleableKeyStates.Set(StatesList[i]);
-                int delayBetweenChecks = 250;
-                for (int delayed = 0; !backgroundWorker.CancellationPending && delayed < delayBetweenStates; delayed += delayBetweenChecks)
-                    Thread.Sleep(delayBetweenChecks);
+                Thread.Sleep(delayBetweenStates);
             }
-            ToggleableKeyStates.Restore();
-        }
-
-        public void EndShow()
-        {
             ToggleableKeyStates.Restore();
         }
 

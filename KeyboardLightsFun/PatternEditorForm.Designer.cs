@@ -170,7 +170,7 @@
             this.previewSpeedNUD.Size = new System.Drawing.Size(41, 20);
             this.previewSpeedNUD.TabIndex = 8;
             this.previewSpeedNUD.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
