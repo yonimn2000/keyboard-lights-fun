@@ -22,23 +22,12 @@ namespace YonatanMankovich.KeyboardLightsFun
         public ToggleableKey(Keys key)
         {
             Key = key;
-            State = Control.IsKeyLocked(Key);
+            RefreshState();
         }
 
-        /*[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern short GetKeyState(int keyCode);
-
-        
-
-        public void SetState(bool state = true)
+        public void RefreshState()
         {
-            if (state != GetState())
-                Toggle();
-        }*/
-
-        public bool RefreshState()
-        {
-            return Control.IsKeyLocked(Key);
+            _state = Control.IsKeyLocked(Key);
         }
 
         [DllImport("user32.dll")]
