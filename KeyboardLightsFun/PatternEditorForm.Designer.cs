@@ -40,6 +40,7 @@
             this.previewBTN = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.previewSpeedNUD = new System.Windows.Forms.NumericUpDown();
+            this.patternPreviewBW = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.patternGV)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewSpeedNUD)).BeginInit();
@@ -139,7 +140,7 @@
             this.previewBTN.Name = "previewBTN";
             this.previewBTN.Size = new System.Drawing.Size(125, 23);
             this.previewBTN.TabIndex = 6;
-            this.previewBTN.Text = "Preview";
+            this.previewBTN.Text = "Start preview";
             this.previewBTN.UseVisualStyleBackColor = true;
             this.previewBTN.Click += new System.EventHandler(this.previewBTN_Click);
             // 
@@ -173,6 +174,14 @@
             0,
             0,
             0});
+            // 
+            // patternPreviewBW
+            // 
+            this.patternPreviewBW.WorkerReportsProgress = true;
+            this.patternPreviewBW.WorkerSupportsCancellation = true;
+            this.patternPreviewBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.patternPreviewBW_DoWork);
+            this.patternPreviewBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.patternPreviewBW_ProgressChanged);
+            this.patternPreviewBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.patternPreviewBW_RunWorkerCompleted);
             // 
             // PatternEditorForm
             // 
@@ -214,5 +223,6 @@
         private System.Windows.Forms.Button previewBTN;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown previewSpeedNUD;
+        private System.ComponentModel.BackgroundWorker patternPreviewBW;
     }
 }

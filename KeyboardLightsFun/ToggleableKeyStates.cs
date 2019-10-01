@@ -32,11 +32,9 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public static void Set(ToggleableKeyStates toggleableKeyStates)
         {
-            System.Diagnostics.Debug.WriteLine("Wanted: "+toggleableKeyStates); //TODO: Remove
             numLock.State = toggleableKeyStates.NumLockState;
             capsLock.State = toggleableKeyStates.CapsLockState;
             scrollLock.State = toggleableKeyStates.ScrollLockState;
-            System.Diagnostics.Debug.WriteLine("Got: " + numLock.State + capsLock.State + scrollLock.State); //TODO: Remove
         }
 
         public static void Refresh()

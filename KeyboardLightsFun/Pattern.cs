@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -8,34 +8,32 @@ namespace YonatanMankovich.KeyboardLightsFun
     {
         public string Name { get; set; }
         public IList<ToggleableKeyStates> StatesList { get; }
-        public Thread ShowThread { get; }
 
         public Pattern(string name, IList<ToggleableKeyStates> statesList)
         {
             Name = name;
             StatesList = new List<ToggleableKeyStates>(statesList);
-            ShowThread = new ThreadStart();
         }
 
-        public void StartShow(int delayBetweenStates)
+        public void StartShow(int delayBetweenStates, BackgroundWorker backgroundWorker)
         {
-            new Thread(new ThreadStart(delegate
+            backgroundWorker.ReportProgress(0);
+            ToggleableKeyStates.Refresh();
+            ToggleableKeyStates.Save();
+            for (int i = 0; !backgroundWorker.CancellationPending && i < StatesList.Count; i++)
             {
-                ToggleableKeyStates.Refresh();
-                ToggleableKeyStates.Save();
-                ToggleableKeyStates blankKeyStates = new ToggleableKeyStates(false, false, false);
-                ToggleableKeyStates.Set(blankKeyStates);
-                Thread.Sleep(delayBetweenStates);
-                foreach (ToggleableKeyStates toggleableKeyStates in StatesList)
-                {
-                    ToggleableKeyStates.Set(toggleableKeyStates);
-                    Thread.Sleep(delayBetweenStates);
-                }
-                ToggleableKeyStates.Set(blankKeyStates);
-                Thread.Sleep(delayBetweenStates);
-                ToggleableKeyStates.Restore();
-                callback();
-            })).Start();
+                backgroundWorker.ReportProgress((i + 1) * 100 / StatesList.Count);
+                ToggleableKeyStates.Set(StatesList[i]);
+                int delayBetweenChecks = 250;
+                for (int delayed = 0; !backgroundWorker.CancellationPending && delayed < delayBetweenStates; delayed += delayBetweenChecks)
+                    Thread.Sleep(delayBetweenChecks);
+            }
+            ToggleableKeyStates.Restore();
+        }
+
+        public void EndShow()
+        {
+            ToggleableKeyStates.Restore();
         }
 
         public Pattern Clone()

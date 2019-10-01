@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -42,12 +43,6 @@ namespace YonatanMankovich.KeyboardLightsFun
             }
         }
 
-        private void previewBTN_Click(object sender, EventArgs e)
-        {
-            UpdatePattern();
-            Pattern.StartShow((int)previewSpeedNUD.Value * 100);
-        }
-
         private void nameTB_TextChanged(object sender, EventArgs e)
         {
             if (nameTB.Text.Length > 0)
@@ -59,6 +54,45 @@ namespace YonatanMankovich.KeyboardLightsFun
             e.Row.Cells[0].Value = false;
             e.Row.Cells[1].Value = false;
             e.Row.Cells[2].Value = false;
+        }
+
+        private void previewBTN_Click(object sender, EventArgs e)
+        {
+            if (patternPreviewBW.IsBusy)
+            {
+                patternPreviewBW.CancelAsync();
+            }
+            else
+            {
+                UpdatePattern();
+                previewBTN.Text = "Stop preview";
+                patternGV.ReadOnly = true;
+                patternPreviewBW.RunWorkerAsync();
+            }
+        }
+
+        private void patternPreviewBW_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Pattern.StartShow((int)previewSpeedNUD.Value * 100, patternPreviewBW);
+        }
+
+        private void patternPreviewBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e.ProgressPercentage);
+            System.Diagnostics.Debug.WriteLine((int)(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100));
+            patternGV.ClearSelection();
+            if (e.ProgressPercentage > 0)
+            {
+                patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100) - 1].Selected = true;
+                patternGV.FirstDisplayedScrollingRowIndex = patternGV.SelectedRows[0].Index;
+            }
+        }
+
+        private void patternPreviewBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            previewBTN.Text = "Start preview";
+            patternGV.ReadOnly = false;
+            patternGV.ClearSelection();
         }
     }
 }
