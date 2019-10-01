@@ -16,6 +16,7 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public void Show(int delayBetweenStates)
         {
+            ToggleableKeyStates.Refresh();
             ToggleableKeyStates.Save();
             ToggleableKeyStates blankKeyStates = new ToggleableKeyStates(false,false,false);
             ToggleableKeyStates.Set(blankKeyStates);

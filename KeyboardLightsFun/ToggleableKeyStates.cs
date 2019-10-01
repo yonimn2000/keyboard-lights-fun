@@ -32,22 +32,30 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public static void Set(ToggleableKeyStates toggleableKeyStates)
         {
-            System.Diagnostics.Debug.WriteLine(toggleableKeyStates); //TODO: Remove
-            numLock.SetState(toggleableKeyStates.NumLockState);
-            capsLock.SetState(toggleableKeyStates.CapsLockState);
-            scrollLock.SetState(toggleableKeyStates.ScrollLockState);
+            System.Diagnostics.Debug.WriteLine("Wanted: "+toggleableKeyStates); //TODO: Remove
+            numLock.State = toggleableKeyStates.NumLockState;
+            capsLock.State = toggleableKeyStates.CapsLockState;
+            scrollLock.State = toggleableKeyStates.ScrollLockState;
+            System.Diagnostics.Debug.WriteLine("Got: " + numLock.State + capsLock.State + scrollLock.State); //TODO: Remove
+        }
+
+        public static void Refresh()
+        {
+            numLock.RefreshState();
+            capsLock.RefreshState();
+            scrollLock.RefreshState();
         }
 
         public static void Save()
         {
-            savedStates = new ToggleableKeyStates(numLock.GetState(), capsLock.GetState(), scrollLock.GetState());
+            savedStates = new ToggleableKeyStates(numLock.State, capsLock.State, scrollLock.State);
         }
 
         public static void Restore()
         {
-            numLock.SetState(savedStates.NumLockState);
-            capsLock.SetState(savedStates.CapsLockState);
-            scrollLock.SetState(savedStates.ScrollLockState);
+            numLock.State = savedStates.NumLockState;
+            capsLock.State = savedStates.CapsLockState;
+            scrollLock.State = savedStates.ScrollLockState;
         }
     }
 }
