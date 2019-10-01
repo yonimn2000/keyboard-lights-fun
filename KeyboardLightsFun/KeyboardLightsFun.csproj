@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pattern.cs" />
+    <Compile Include="PatternEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatternEditorForm.Designer.cs">
+      <DependentUpon>PatternEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PatternListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="ToggleableKeyStates.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatternEditorForm.resx">
+      <DependentUpon>PatternEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatternListForm.resx">
       <DependentUpon>PatternListForm.cs</DependentUpon>

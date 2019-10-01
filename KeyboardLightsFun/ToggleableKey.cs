@@ -14,14 +14,11 @@ namespace YonatanMankovich.KeyboardLightsFun
         }
 
         [DllImport("user32.dll")]
-        static extern short GetKeyState(byte keyCode);
-
-        [DllImport("user32.dll")]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
         public bool GetState()
         {
-            return GetKeyState((byte)Key) == 1;
+            return Control.IsKeyLocked(Key);
         }
 
         public void SetState(bool state = true)

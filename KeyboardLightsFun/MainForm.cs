@@ -17,7 +17,12 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             // TODO: remove temporary
             for (int i = 0; i < 100; i++)
-                patterns.Add(new Pattern("Pattern #" + i));
+                patterns.Add(new Pattern("Pattern #" + i,new List<ToggleableKeyStates>()
+                { 
+                    new ToggleableKeyStates(true,false,false),
+                    new ToggleableKeyStates(false,true,false),
+                    new ToggleableKeyStates(false,false,true)
+                }));
         }
 
         private void ContiniousCB_CheckedChanged(object sender, EventArgs e)
@@ -32,6 +37,11 @@ namespace YonatanMankovich.KeyboardLightsFun
             if (patternListDialogResult == DialogResult.OK) // AKA "Save"
                 patterns = patternListForm.Patterns;
             patternListForm.Dispose();
+        }
+
+        private void startStopBTN_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -7,30 +8,26 @@ namespace YonatanMankovich.KeyboardLightsFun
     {
         public IList<Pattern> Patterns { get; private set; }
 
-        private bool isSaved = true;
-
         internal PatternListForm(IList<Pattern> patterns)
         {
             InitializeComponent();
             DialogResult = DialogResult.Cancel;
             Patterns = new List<Pattern>(patterns);
             foreach (Pattern pattern in patterns)
-                patternsLB.Items.Add(pattern);
+                patternsLB.Items.Add(pattern.Name);
         }
 
-        private void removeBTN_Click(object sender, System.EventArgs e)
+        private void removeBTN_Click(object sender, EventArgs e)
         {
-            isSaved = false;
         }
 
-        private void saveBTN_Click(object sender, System.EventArgs e)
+        private void saveBTN_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            isSaved = true;
             Close();
         }
 
-        private void cancelBTN_Click(object sender, System.EventArgs e)
+        private void cancelBTN_Click(object sender, EventArgs e)
         {
             ConfirmClosing();
         }
@@ -48,14 +45,41 @@ namespace YonatanMankovich.KeyboardLightsFun
                 Close();*/
         }
 
-        private void editBTN_Click(object sender, System.EventArgs e)
+        private void editBTN_Click(object sender, EventArgs e)
         {
-            isSaved = false;
+            EditSelectedPattern();
         }
 
-        private void addBTN_Click(object sender, System.EventArgs e)
+        private void EditSelectedPattern()
         {
-            isSaved = false;
+            if (patternsLB.SelectedIndex >= 0)
+            {
+                PatternEditorForm patternEditorForm = new PatternEditorForm(Patterns[patternsLB.SelectedIndex]);
+                DialogResult patternListDialogResult = patternEditorForm.ShowDialog(this);
+                if (patternListDialogResult == DialogResult.OK) // AKA "Save"
+                {
+                    Patterns[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
+                    patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern.Name;
+                }
+                patternEditorForm.Dispose();
+            }
+        }
+
+        private void addBTN_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void patternsLB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (patternsLB.SelectedIndex >= 0)
+                editBTN.Enabled = true;
+        }
+
+        private void patternsLB_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (patternsLB.IndexFromPoint(e.Location) >= 0)
+                EditSelectedPattern();
         }
     }
 }

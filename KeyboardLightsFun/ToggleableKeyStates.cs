@@ -17,16 +17,11 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public override string ToString()
         {
-            string output = "";
-            output += SurroundWithParentheses(NumLockState ? "X" : " ") + " ";
-            output += SurroundWithParentheses(CapsLockState ? "X" : " ") + " ";
-            output += SurroundWithParentheses(ScrollLockState ? "X" : " ");
-            return output;
-        }
-
-        private string SurroundWithParentheses(string input)
-        {
-            return "(" + input + ")";
+            string output = "(";
+            output += (NumLockState ? "X" : " ") + ") (";
+            output += (CapsLockState ? "X" : " ") + ") (";
+            output += (ScrollLockState ? "X" : " ");
+            return output + ")";
         }
 
         private static readonly ToggleableKey numLock = new ToggleableKey(Keys.NumLock);
@@ -37,6 +32,7 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public static void Set(ToggleableKeyStates toggleableKeyStates)
         {
+            System.Diagnostics.Debug.WriteLine(toggleableKeyStates); //TODO: Remove
             numLock.SetState(toggleableKeyStates.NumLockState);
             capsLock.SetState(toggleableKeyStates.CapsLockState);
             scrollLock.SetState(toggleableKeyStates.ScrollLockState);

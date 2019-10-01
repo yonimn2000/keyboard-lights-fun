@@ -50,10 +50,13 @@
             this.patternsLB.Name = "patternsLB";
             this.patternsLB.Size = new System.Drawing.Size(200, 199);
             this.patternsLB.TabIndex = 0;
+            this.patternsLB.SelectedIndexChanged += new System.EventHandler(this.patternsLB_SelectedIndexChanged);
+            this.patternsLB.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.patternsLB_MouseDoubleClick);
             // 
             // editBTN
             // 
             this.editBTN.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.editBTN.Enabled = false;
             this.editBTN.Location = new System.Drawing.Point(3, 3);
             this.editBTN.Name = "editBTN";
             this.editBTN.Size = new System.Drawing.Size(60, 24);
@@ -151,6 +154,8 @@
             this.Controls.Add(this.patternsLB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "PatternListForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Pattern List";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PatternListForm_FormClosing);

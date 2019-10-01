@@ -135,6 +135,7 @@
             this.startStopBTN.TabIndex = 16;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
+            this.startStopBTN.Click += new System.EventHandler(this.startStopBTN_Click);
             // 
             // patternsCB
             // 
