@@ -25,6 +25,11 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
+            SavePattern();
+        }
+
+        private void SavePattern()
+        {
             UpdatePattern();
             DialogResult = DialogResult.OK;
         }
@@ -33,14 +38,9 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             Pattern.StatesList.Clear();
             foreach (DataGridViewRow row in patternGV.Rows)
-            {
                 if (row.Cells[2].Value != null)
-                {
-                    ToggleableKeyStates toggleableKeyStates = new ToggleableKeyStates(
-                                (bool)row.Cells[0].Value, (bool)row.Cells[1].Value, (bool)row.Cells[2].Value);
-                    Pattern.StatesList.Add(toggleableKeyStates);
-                }
-            }
+                    Pattern.StatesList.Add(new ToggleableKeyStates(
+                        (bool)row.Cells[0].Value, (bool)row.Cells[1].Value, (bool)row.Cells[2].Value));
         }
 
         private void nameTB_TextChanged(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             else
             {
                 UpdatePattern();
-                previewBTN.Text = "Stop preview";
+                previewBTN.Text = "Stop";
                 patternGV.ReadOnly = true;
                 patternPreviewBW.RunWorkerAsync();
             }
@@ -77,7 +77,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void patternPreviewBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             patternGV.ClearSelection();
-            if (e.ProgressPercentage > 0)
+            if (e.ProgressPercentage > 0 && !patternPreviewBW.CancellationPending)
             {
                 patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100) - 1].Selected = true;
                 patternGV.FirstDisplayedScrollingRowIndex = patternGV.SelectedRows[0].Index;
@@ -86,9 +86,30 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void patternPreviewBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            previewBTN.Text = "Start preview";
+            previewBTN.Text = "Start";
             patternGV.ReadOnly = false;
             patternGV.ClearSelection();
+        }
+
+        private void PatternEditorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            patternPreviewBW.CancelAsync();
+            if (DialogResult != DialogResult.OK)
+            {
+                DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
+                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                switch (closeDialogResult)
+                {
+                    case DialogResult.Cancel: e.Cancel = true; break;
+                    case DialogResult.Yes: SavePattern(); break;
+                    case DialogResult.No: DialogResult = DialogResult.Cancel; break;
+                }
+            }
+        }
+
+        private void cancelBTN_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

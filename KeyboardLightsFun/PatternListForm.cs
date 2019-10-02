@@ -18,35 +18,37 @@ namespace YonatanMankovich.KeyboardLightsFun
             patternsLB.SelectedIndex = 0;
         }
 
-        private void removeBTN_Click(object sender, EventArgs e)
-        {
-        }
-
         private void saveBTN_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void cancelBTN_Click(object sender, EventArgs e)
         {
-            ConfirmClosing();
+            Close();
         }
 
         private void PatternListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ConfirmClosing();
-            //e.Cancel = true;
-        }
-
-        private void ConfirmClosing()
-        {
-            /*if (isSaved||DialogResult.Yes == MessageBox.Show("Are you sure you want to close without saving?", "Warning",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                Close();*/
+            if (DialogResult != DialogResult.OK)
+            {
+                DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
+                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                switch (closeDialogResult)
+                {
+                    case DialogResult.Cancel: e.Cancel = true; break;
+                    case DialogResult.Yes: DialogResult = DialogResult.OK; break;
+                    case DialogResult.No: DialogResult = DialogResult.Cancel; break;
+                }
+            }
         }
 
         private void editBTN_Click(object sender, EventArgs e)
+        {
+            EditSelectedPattern();
+        }
+
+        private void EditSelectedPattern()
         {
             if (patternsLB.SelectedIndex >= 0)
             {
@@ -61,9 +63,27 @@ namespace YonatanMankovich.KeyboardLightsFun
             }
         }
 
+        private void removeBTN_Click(object sender, EventArgs e)
+        {
+            if (patternsLB.SelectedIndex >= 0)
+            {
+                Patterns.RemoveAt(patternsLB.SelectedIndex);
+                int currentSelectedIndex = patternsLB.SelectedIndex;
+                patternsLB.Items.RemoveAt(patternsLB.SelectedIndex);
+                if (currentSelectedIndex == patternsLB.Items.Count)
+                    patternsLB.SelectedIndex = currentSelectedIndex - 1;
+                else
+                    patternsLB.SelectedIndex = currentSelectedIndex;
+            }
+        }
+
         private void addBTN_Click(object sender, EventArgs e)
         {
-
+            Pattern pattern = new Pattern("Unnamed pattern");
+            patternsLB.Items.Add(pattern);
+            Patterns.Add(pattern);
+            patternsLB.SelectedItem = pattern;
+            EditSelectedPattern();
         }
 
         private void patternsLB_MouseDown(object sender, MouseEventArgs e)

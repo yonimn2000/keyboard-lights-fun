@@ -10,10 +10,15 @@ namespace YonatanMankovich.KeyboardLightsFun
         public string Name { get; set; }
         public IList<ToggleableKeyStates> StatesList { get; }
 
-        public Pattern(string name, IList<ToggleableKeyStates> statesList)
+        public Pattern(string name, IList<ToggleableKeyStates> statesList):this(name)
+        {
+            StatesList = new List<ToggleableKeyStates>(statesList);
+        }
+
+        public Pattern(string name)
         {
             Name = name;
-            StatesList = new List<ToggleableKeyStates>(statesList);
+            StatesList = new List<ToggleableKeyStates>();
         }
 
         public void StartShow(int delayBetweenStates, BackgroundWorker backgroundWorker)

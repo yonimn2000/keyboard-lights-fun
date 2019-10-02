@@ -37,6 +37,8 @@
             this.startStopBTN = new System.Windows.Forms.Button();
             this.patternsCB = new System.Windows.Forms.ComboBox();
             this.patternEditBTN = new System.Windows.Forms.Button();
+            this.patternShowBW = new System.ComponentModel.BackgroundWorker();
+            this.patternShowPB = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedNUD)).BeginInit();
             this.configGroup.SuspendLayout();
@@ -76,7 +78,7 @@
             this.speedNUD.Size = new System.Drawing.Size(48, 20);
             this.speedNUD.TabIndex = 12;
             this.speedNUD.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
@@ -131,7 +133,7 @@
             this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.startStopBTN.Location = new System.Drawing.Point(178, 39);
             this.startStopBTN.Name = "startStopBTN";
-            this.startStopBTN.Size = new System.Drawing.Size(139, 52);
+            this.startStopBTN.Size = new System.Drawing.Size(139, 30);
             this.startStopBTN.TabIndex = 16;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
@@ -141,9 +143,6 @@
             // 
             this.patternsCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.patternsCB.FormattingEnabled = true;
-            this.patternsCB.Items.AddRange(new object[] {
-            "Random",
-            "All"});
             this.patternsCB.Location = new System.Drawing.Point(117, 12);
             this.patternsCB.Name = "patternsCB";
             this.patternsCB.Size = new System.Drawing.Size(200, 21);
@@ -159,12 +158,28 @@
             this.patternEditBTN.UseVisualStyleBackColor = true;
             this.patternEditBTN.Click += new System.EventHandler(this.patternEditBTN_Click);
             // 
+            // patternShowBW
+            // 
+            this.patternShowBW.WorkerReportsProgress = true;
+            this.patternShowBW.WorkerSupportsCancellation = true;
+            this.patternShowBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.patternShowBW_DoWork);
+            this.patternShowBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.patternShowBW_ProgressChanged);
+            this.patternShowBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.patternShowBW_RunWorkerCompleted);
+            // 
+            // patternShowPB
+            // 
+            this.patternShowPB.Location = new System.Drawing.Point(179, 75);
+            this.patternShowPB.Name = "patternShowPB";
+            this.patternShowPB.Size = new System.Drawing.Size(138, 16);
+            this.patternShowPB.TabIndex = 19;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(325, 101);
+            this.Controls.Add(this.patternShowPB);
             this.Controls.Add(this.patternEditBTN);
             this.Controls.Add(this.patternsCB);
             this.Controls.Add(this.configGroup);
@@ -173,6 +188,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Keyboard Lights Fun";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedNUD)).EndInit();
             this.configGroup.ResumeLayout(false);
@@ -191,6 +207,8 @@
         private System.Windows.Forms.Button startStopBTN;
         private System.Windows.Forms.ComboBox patternsCB;
         private System.Windows.Forms.Button patternEditBTN;
+        private System.ComponentModel.BackgroundWorker patternShowBW;
+        private System.Windows.Forms.ProgressBar patternShowPB;
     }
 }
 

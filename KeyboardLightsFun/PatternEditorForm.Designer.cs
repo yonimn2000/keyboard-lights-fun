@@ -41,13 +41,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.previewSpeedNUD = new System.Windows.Forms.NumericUpDown();
             this.patternPreviewBW = new System.ComponentModel.BackgroundWorker();
+            this.previewGB = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.patternGV)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewSpeedNUD)).BeginInit();
+            this.previewGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // nameTB
             // 
+            this.nameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.nameTB.Location = new System.Drawing.Point(15, 25);
             this.nameTB.Name = "nameTB";
             this.nameTB.Size = new System.Drawing.Size(125, 20);
@@ -67,6 +71,9 @@
             // 
             this.patternGV.AllowUserToResizeColumns = false;
             this.patternGV.AllowUserToResizeRows = false;
+            this.patternGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.patternGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.patternGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.patternGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -119,15 +126,18 @@
             this.cancelBTN.TabIndex = 4;
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
+            this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.saveBTN, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.cancelBTN, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 313);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 335);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -136,26 +146,28 @@
             // 
             // previewBTN
             // 
-            this.previewBTN.Location = new System.Drawing.Point(15, 284);
+            this.previewBTN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.previewBTN.Location = new System.Drawing.Point(6, 19);
             this.previewBTN.Name = "previewBTN";
-            this.previewBTN.Size = new System.Drawing.Size(125, 23);
+            this.previewBTN.Size = new System.Drawing.Size(113, 23);
             this.previewBTN.TabIndex = 6;
-            this.previewBTN.Text = "Start preview";
+            this.previewBTN.Text = "Start";
             this.previewBTN.UseVisualStyleBackColor = true;
             this.previewBTN.Click += new System.EventHandler(this.previewBTN_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 260);
+            this.label2.Location = new System.Drawing.Point(6, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Preview speed:";
+            this.label2.Text = "Speed";
             // 
             // previewSpeedNUD
             // 
-            this.previewSpeedNUD.Location = new System.Drawing.Point(99, 258);
+            this.previewSpeedNUD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.previewSpeedNUD.Location = new System.Drawing.Point(50, 45);
             this.previewSpeedNUD.Maximum = new decimal(new int[] {
             10,
             0,
@@ -167,7 +179,7 @@
             0,
             0});
             this.previewSpeedNUD.Name = "previewSpeedNUD";
-            this.previewSpeedNUD.Size = new System.Drawing.Size(41, 20);
+            this.previewSpeedNUD.Size = new System.Drawing.Size(69, 20);
             this.previewSpeedNUD.TabIndex = 8;
             this.previewSpeedNUD.Value = new decimal(new int[] {
             5,
@@ -183,27 +195,43 @@
             this.patternPreviewBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.patternPreviewBW_ProgressChanged);
             this.patternPreviewBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.patternPreviewBW_RunWorkerCompleted);
             // 
+            // previewGB
+            // 
+            this.previewGB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.previewGB.Controls.Add(this.previewBTN);
+            this.previewGB.Controls.Add(this.previewSpeedNUD);
+            this.previewGB.Controls.Add(this.label2);
+            this.previewGB.Location = new System.Drawing.Point(15, 257);
+            this.previewGB.Name = "previewGB";
+            this.previewGB.Size = new System.Drawing.Size(125, 72);
+            this.previewGB.TabIndex = 9;
+            this.previewGB.TabStop = false;
+            this.previewGB.Text = "Preview";
+            // 
             // PatternEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(152, 355);
-            this.Controls.Add(this.previewSpeedNUD);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.previewBTN);
+            this.ClientSize = new System.Drawing.Size(152, 378);
+            this.Controls.Add(this.previewGB);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.patternGV);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameTB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(168, 300);
             this.Name = "PatternEditorForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Pattern Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PatternEditorForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.patternGV)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.previewSpeedNUD)).EndInit();
+            this.previewGB.ResumeLayout(false);
+            this.previewGB.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,5 +252,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown previewSpeedNUD;
         private System.ComponentModel.BackgroundWorker patternPreviewBW;
+        private System.Windows.Forms.GroupBox previewGB;
     }
 }

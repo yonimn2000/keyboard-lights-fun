@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -16,13 +17,22 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void LoadPatterns()
         {
             // TODO: remove temporary
-            for (int i = 0; i < 100; i++)
-                patterns.Add(new Pattern("Pattern #" + i,new List<ToggleableKeyStates>()
-                { 
+            for (int i = 0; i < 10; i++)
+                patterns.Add(new Pattern("Pattern #" + i, new List<ToggleableKeyStates>()
+                {
                     new ToggleableKeyStates(true,false,false),
                     new ToggleableKeyStates(false,true,false),
                     new ToggleableKeyStates(false,false,true)
                 }));
+            UpdatePatternsComboBox();
+        }
+
+        private void UpdatePatternsComboBox()
+        {
+            patternsCB.Items.Clear();
+            foreach (Pattern pattern in patterns)
+                patternsCB.Items.Add(pattern);
+            patternsCB.SelectedIndex = 0;
         }
 
         private void ContiniousCB_CheckedChanged(object sender, EventArgs e)
@@ -37,11 +47,32 @@ namespace YonatanMankovich.KeyboardLightsFun
             if (patternListDialogResult == DialogResult.OK) // AKA "Save"
                 patterns = patternListForm.Patterns;
             patternListForm.Dispose();
+            UpdatePatternsComboBox();
         }
 
         private void startStopBTN_Click(object sender, EventArgs e)
         {
+            patternShowBW.RunWorkerAsync(patternsCB.SelectedIndex);
+        }
 
+        private void patternShowBW_DoWork(object sender, DoWorkEventArgs e)
+        {
+            patterns[(int)e.Argument].StartShow(1000 / (int)speedNUD.Value, patternShowBW);
+        }
+
+        private void patternShowBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            patternShowPB.Value = e.ProgressPercentage;
+        }
+
+        private void patternShowBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            patternShowBW.CancelAsync();
         }
     }
 }
