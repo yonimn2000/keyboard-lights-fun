@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.Collections.Generic;
 
 namespace YonatanMankovich.KeyboardLightsFun
 {
-    class Pattern
+    public class Pattern
     {
         public string Name { get; set; }
         public IList<ToggleableKeyStates> StatesList { get; }
 
-        public Pattern(string name, IList<ToggleableKeyStates> statesList):this(name)
+        public Pattern(string name, IList<ToggleableKeyStates> statesList) : this(name)
         {
             StatesList = new List<ToggleableKeyStates>(statesList);
         }
@@ -21,7 +18,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             StatesList = new List<ToggleableKeyStates>();
         }
 
-        public void StartShow(int delayBetweenStates, BackgroundWorker backgroundWorker)
+        public void StartShow(int delayBetweenStates, System.ComponentModel.BackgroundWorker backgroundWorker)
         {
             backgroundWorker.ReportProgress(0);
             ToggleableKeyStates.Refresh();
@@ -30,7 +27,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 backgroundWorker.ReportProgress((i + 1) * 100 / StatesList.Count);
                 ToggleableKeyStates.Set(StatesList[i]);
-                Thread.Sleep(delayBetweenStates);
+                System.Threading.Thread.Sleep(delayBetweenStates);
             }
             ToggleableKeyStates.Restore();
         }

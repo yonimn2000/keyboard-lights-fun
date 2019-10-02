@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -30,7 +29,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             _state = Control.IsKeyLocked(Key);
         }
 
-        [DllImport("user32.dll")]
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         public void Toggle()
         {
