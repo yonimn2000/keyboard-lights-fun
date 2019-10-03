@@ -20,6 +20,7 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
+            PatternsFileManager.SavePatterns(Patterns);
             DialogResult = DialogResult.OK;
         }
 

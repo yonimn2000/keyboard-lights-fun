@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Pattern.cs" />
+    <Compile Include="Classes\PatternsFileManager.cs" />
     <Compile Include="Forms\PatternEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>

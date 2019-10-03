@@ -6,7 +6,7 @@
         <xs:element maxOccurs="unbounded" name="Pattern">
           <xs:complexType>
             <xs:sequence>
-              <xs:element maxOccurs="unbounded" name="State">
+              <xs:element maxOccurs="unbounded" name="States">
                 <xs:complexType>
                   <xs:attribute name="numLock" type="xs:boolean" use="required" />
                   <xs:attribute name="capsLock" type="xs:boolean" use="required" />

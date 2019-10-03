@@ -11,19 +11,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         public MainForm()
         {
             InitializeComponent();
-            LoadPatterns();
-        }
-
-        private void LoadPatterns()
-        {
-            // TODO: remove temporary
-            for (int i = 0; i < 10; i++)
-                patterns.Add(new Pattern("Pattern #" + i, new List<ToggleableKeyStates>()
-                {
-                    new ToggleableKeyStates(true,false,false),
-                    new ToggleableKeyStates(false,true,false),
-                    new ToggleableKeyStates(false,false,true)
-                }));
+            PatternsFileManager.LoadPatterns(patterns);
             UpdatePatternsComboBox();
         }
 
