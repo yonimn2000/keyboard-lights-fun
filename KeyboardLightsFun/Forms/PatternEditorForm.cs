@@ -30,8 +30,15 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void SavePattern()
         {
-            UpdatePattern();
-            DialogResult = DialogResult.OK;
+            if (nameTB.Text.Length == 0)
+                MessageBox.Show("The pattern must have a name.");
+            else if (Pattern.StatesList.Count == 0)
+                MessageBox.Show("The pattern must have at least one key state.");
+            else
+            {
+                UpdatePattern();
+                DialogResult = DialogResult.OK;
+            }
         }
 
         private void UpdatePattern()
