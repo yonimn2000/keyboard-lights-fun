@@ -7,20 +7,23 @@ namespace YonatanMankovich.KeyboardLightsFun
 {
     public partial class MainForm : Form
     {
-        IList<Pattern> patterns = new List<Pattern>();
+        List<Pattern> patterns = new List<Pattern>();
         public MainForm()
         {
             InitializeComponent();
-            PatternsFileManager.LoadPatterns(patterns);
+            PatternsFileManager.LoadPatterns(ref patterns);
             UpdatePatternsComboBox();
         }
 
         private void UpdatePatternsComboBox()
         {
             patternsCB.Items.Clear();
-            foreach (Pattern pattern in patterns)
-                patternsCB.Items.Add(pattern);
-            patternsCB.SelectedIndex = 0;
+            if (patterns.Count > 0)
+            {
+                foreach (Pattern pattern in patterns)
+                    patternsCB.Items.Add(pattern);
+                patternsCB.SelectedIndex = 0;
+            }
         }
 
         private void ContiniousCB_CheckedChanged(object sender, EventArgs e)

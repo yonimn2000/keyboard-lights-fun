@@ -5,7 +5,7 @@ namespace YonatanMankovich.KeyboardLightsFun
     public class Pattern
     {
         public string Name { get; set; }
-        public IList<ToggleableKeyStates> StatesList { get; }
+        public List<ToggleableKeyStates> StatesList { get; }
 
         public Pattern(string name, IList<ToggleableKeyStates> statesList) : this(name)
         {
@@ -17,6 +17,8 @@ namespace YonatanMankovich.KeyboardLightsFun
             Name = name;
             StatesList = new List<ToggleableKeyStates>();
         }
+
+        public Pattern() : this("") { }
 
         public void StartShow(int delayBetweenStates, System.ComponentModel.BackgroundWorker backgroundWorker)
         {

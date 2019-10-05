@@ -6,20 +6,24 @@ namespace YonatanMankovich.KeyboardLightsFun
 {
     internal partial class PatternListForm : Form
     {
-        public IList<Pattern> Patterns { get; private set; }
+        public List<Pattern> Patterns { get; private set; }
 
         internal PatternListForm(IList<Pattern> patterns)
         {
             InitializeComponent();
             DialogResult = DialogResult.Cancel;
             Patterns = new List<Pattern>(patterns);
-            foreach (Pattern pattern in Patterns)
-                patternsLB.Items.Add(pattern);
-            patternsLB.SelectedIndex = 0;
+            if (patterns.Count > 0)
+            {
+                foreach (Pattern pattern in Patterns)
+                    patternsLB.Items.Add(pattern);
+                patternsLB.SelectedIndex = 0;
+            }
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
+            // TODO: Check for duplicates.
             PatternsFileManager.SavePatterns(Patterns);
             DialogResult = DialogResult.OK;
         }

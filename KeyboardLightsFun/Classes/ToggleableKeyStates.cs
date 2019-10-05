@@ -15,6 +15,8 @@ namespace YonatanMankovich.KeyboardLightsFun
             ScrollLockState = scrollLockState;
         }
 
+        public ToggleableKeyStates() : this(false, false, false) { }
+
         public override string ToString()
         {
             string output = "(";
