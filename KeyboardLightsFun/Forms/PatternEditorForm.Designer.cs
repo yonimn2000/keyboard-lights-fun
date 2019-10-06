@@ -42,6 +42,7 @@
             this.previewSpeedNUD = new System.Windows.Forms.NumericUpDown();
             this.patternPreviewBW = new System.ComponentModel.BackgroundWorker();
             this.previewGB = new System.Windows.Forms.GroupBox();
+            this.toggeableKeyStatesVisualizer = new YonatanMankovich.KeyboardLightsFun.ToggeableKeyStatesVisualizer();
             ((System.ComponentModel.ISupportInitialize)(this.patternGV)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewSpeedNUD)).BeginInit();
@@ -84,7 +85,7 @@
             this.patternGV.Location = new System.Drawing.Point(15, 51);
             this.patternGV.Name = "patternGV";
             this.patternGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.patternGV.Size = new System.Drawing.Size(125, 200);
+            this.patternGV.Size = new System.Drawing.Size(125, 172);
             this.patternGV.TabIndex = 2;
             this.patternGV.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.patternGV_DefaultValuesNeeded);
             // 
@@ -137,7 +138,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.saveBTN, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.cancelBTN, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 335);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 334);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -202,18 +203,32 @@
             this.previewGB.Controls.Add(this.previewBTN);
             this.previewGB.Controls.Add(this.previewSpeedNUD);
             this.previewGB.Controls.Add(this.label2);
-            this.previewGB.Location = new System.Drawing.Point(15, 257);
+            this.previewGB.Location = new System.Drawing.Point(15, 229);
             this.previewGB.Name = "previewGB";
             this.previewGB.Size = new System.Drawing.Size(125, 72);
             this.previewGB.TabIndex = 9;
             this.previewGB.TabStop = false;
             this.previewGB.Text = "Preview";
             // 
+            // toggeableKeyStatesVisualizer
+            // 
+            this.toggeableKeyStatesVisualizer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toggeableKeyStatesVisualizer.BackColor = System.Drawing.Color.Transparent;
+            this.toggeableKeyStatesVisualizer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toggeableKeyStatesVisualizer.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toggeableKeyStatesVisualizer.Location = new System.Drawing.Point(15, 307);
+            this.toggeableKeyStatesVisualizer.Name = "toggeableKeyStatesVisualizer";
+            this.toggeableKeyStatesVisualizer.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.toggeableKeyStatesVisualizer.Size = new System.Drawing.Size(125, 21);
+            this.toggeableKeyStatesVisualizer.TabIndex = 10;
+            // 
             // PatternEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(152, 378);
+            this.Controls.Add(this.toggeableKeyStatesVisualizer);
             this.Controls.Add(this.previewGB);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.patternGV);
@@ -253,5 +268,6 @@
         private System.Windows.Forms.NumericUpDown previewSpeedNUD;
         private System.ComponentModel.BackgroundWorker patternPreviewBW;
         private System.Windows.Forms.GroupBox previewGB;
+        private ToggeableKeyStatesVisualizer toggeableKeyStatesVisualizer;
     }
 }

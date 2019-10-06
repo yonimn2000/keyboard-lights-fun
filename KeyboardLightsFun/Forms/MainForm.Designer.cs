@@ -39,6 +39,7 @@
             this.patternEditBTN = new System.Windows.Forms.Button();
             this.patternShowBW = new System.ComponentModel.BackgroundWorker();
             this.patternShowPB = new System.Windows.Forms.ProgressBar();
+            this.toggeableKeyStatesVisualizer = new YonatanMankovich.KeyboardLightsFun.ToggeableKeyStatesVisualizer();
             ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedNUD)).BeginInit();
             this.configGroup.SuspendLayout();
@@ -130,10 +131,10 @@
             // 
             // startStopBTN
             // 
-            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.startStopBTN.Location = new System.Drawing.Point(178, 39);
+            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.startStopBTN.Location = new System.Drawing.Point(117, 39);
             this.startStopBTN.Name = "startStopBTN";
-            this.startStopBTN.Size = new System.Drawing.Size(139, 30);
+            this.startStopBTN.Size = new System.Drawing.Size(74, 24);
             this.startStopBTN.TabIndex = 16;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
@@ -150,9 +151,9 @@
             // 
             // patternEditBTN
             // 
-            this.patternEditBTN.Location = new System.Drawing.Point(117, 39);
+            this.patternEditBTN.Location = new System.Drawing.Point(117, 68);
             this.patternEditBTN.Name = "patternEditBTN";
-            this.patternEditBTN.Size = new System.Drawing.Size(55, 52);
+            this.patternEditBTN.Size = new System.Drawing.Size(74, 23);
             this.patternEditBTN.TabIndex = 18;
             this.patternEditBTN.Text = "Edit patterns";
             this.patternEditBTN.UseVisualStyleBackColor = true;
@@ -168,10 +169,20 @@
             // 
             // patternShowPB
             // 
-            this.patternShowPB.Location = new System.Drawing.Point(179, 75);
+            this.patternShowPB.Location = new System.Drawing.Point(197, 39);
             this.patternShowPB.Name = "patternShowPB";
-            this.patternShowPB.Size = new System.Drawing.Size(138, 16);
+            this.patternShowPB.Size = new System.Drawing.Size(120, 24);
             this.patternShowPB.TabIndex = 19;
+            // 
+            // toggeableKeyStatesVisualizer
+            // 
+            this.toggeableKeyStatesVisualizer.BackColor = System.Drawing.Color.Transparent;
+            this.toggeableKeyStatesVisualizer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toggeableKeyStatesVisualizer.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toggeableKeyStatesVisualizer.Location = new System.Drawing.Point(197, 68);
+            this.toggeableKeyStatesVisualizer.Name = "toggeableKeyStatesVisualizer";
+            this.toggeableKeyStatesVisualizer.Size = new System.Drawing.Size(120, 23);
+            this.toggeableKeyStatesVisualizer.TabIndex = 20;
             // 
             // MainForm
             // 
@@ -179,6 +190,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(325, 101);
+            this.Controls.Add(this.toggeableKeyStatesVisualizer);
             this.Controls.Add(this.patternShowPB);
             this.Controls.Add(this.patternEditBTN);
             this.Controls.Add(this.patternsCB);
@@ -209,6 +221,7 @@
         private System.Windows.Forms.Button patternEditBTN;
         private System.ComponentModel.BackgroundWorker patternShowBW;
         private System.Windows.Forms.ProgressBar patternShowPB;
+        private ToggeableKeyStatesVisualizer toggeableKeyStatesVisualizer;
     }
 }
 
