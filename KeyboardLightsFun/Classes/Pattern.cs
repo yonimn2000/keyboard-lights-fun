@@ -20,20 +20,6 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public Pattern() : this("") { }
 
-        public void StartShow(int delayBetweenStates, System.ComponentModel.BackgroundWorker backgroundWorker)
-        {
-            backgroundWorker.ReportProgress(0);
-            ToggleableKeyStates.Refresh();
-            ToggleableKeyStates.Save();
-            for (int i = 0; !backgroundWorker.CancellationPending && i < StatesList.Count; i++)
-            {
-                backgroundWorker.ReportProgress((i + 1) * 100 / StatesList.Count);
-                ToggleableKeyStates.Set(StatesList[i]);
-                System.Threading.Thread.Sleep(delayBetweenStates);
-            }
-            ToggleableKeyStates.Restore();
-        }
-
         public Pattern Clone()
         {
             return new Pattern(Name, StatesList);

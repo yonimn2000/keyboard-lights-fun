@@ -40,7 +40,6 @@
             this.previewBTN = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.previewSpeedNUD = new System.Windows.Forms.NumericUpDown();
-            this.patternPreviewBW = new System.ComponentModel.BackgroundWorker();
             this.previewGB = new System.Windows.Forms.GroupBox();
             this.toggeableKeyStatesVisualizer = new YonatanMankovich.KeyboardLightsFun.ToggeableKeyStatesVisualizer();
             ((System.ComponentModel.ISupportInitialize)(this.patternGV)).BeginInit();
@@ -188,14 +187,6 @@
             0,
             0});
             // 
-            // patternPreviewBW
-            // 
-            this.patternPreviewBW.WorkerReportsProgress = true;
-            this.patternPreviewBW.WorkerSupportsCancellation = true;
-            this.patternPreviewBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.patternPreviewBW_DoWork);
-            this.patternPreviewBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.patternPreviewBW_ProgressChanged);
-            this.patternPreviewBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.patternPreviewBW_RunWorkerCompleted);
-            // 
             // previewGB
             // 
             this.previewGB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -266,7 +257,6 @@
         private System.Windows.Forms.Button previewBTN;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown previewSpeedNUD;
-        private System.ComponentModel.BackgroundWorker patternPreviewBW;
         private System.Windows.Forms.GroupBox previewGB;
         private ToggeableKeyStatesVisualizer toggeableKeyStatesVisualizer;
     }

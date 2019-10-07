@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
@@ -8,6 +7,7 @@ namespace YonatanMankovich.KeyboardLightsFun
     {
         public Pattern Pattern { get; private set; }
 
+        private PatternShowController patternShowController;
         public PatternEditorForm(Pattern pattern)
         {
             Pattern = pattern.Clone();
@@ -63,42 +63,50 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void previewBTN_Click(object sender, EventArgs e)
         {
-            if (patternPreviewBW.IsBusy)
-                patternPreviewBW.CancelAsync();
+            if (patternShowController != null && patternShowController.IsShowing())
+                patternShowController.EndShow();
             else
             {
                 UpdatePattern();
                 previewBTN.Text = "Stop";
                 patternGV.ReadOnly = true;
-                patternPreviewBW.RunWorkerAsync();
+                patternShowController = new PatternShowController(new PatternShow(Pattern), (int)previewSpeedNUD.Value);
+                patternShowController.ProgressReported += PatternShowController_ProgressReported;
+                patternShowController.ShowEnded += PatternShowController_ShowEnded;
+                patternShowController.StartShow();
             }
         }
 
-        private void patternPreviewBW_DoWork(object sender, DoWorkEventArgs e)
+        private void PatternShowController_ShowEnded(object sender, EventArgs e)
         {
-            Pattern.StartShow(1000 / (int)previewSpeedNUD.Value, patternPreviewBW);
-        }
-
-        private void patternPreviewBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            patternGV.ClearSelection();
-            if (e.ProgressPercentage > 0 && !patternPreviewBW.CancellationPending)
+            previewBTN.Invoke(new MethodInvoker(delegate { previewBTN.Text = "Start"; }));
+            patternGV.Invoke(new MethodInvoker(delegate
             {
-                patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100) - 1].Selected = true;
-                patternGV.FirstDisplayedScrollingRowIndex = patternGV.SelectedRows[0].Index;
-            }
+                patternGV.ReadOnly = false;
+                patternGV.ClearSelection();
+            }));
+            toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
+                    delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
         }
 
-        private void patternPreviewBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void PatternShowController_ProgressReported(object sender, ShowProgressChangedEventArgs e)
         {
-            previewBTN.Text = "Start";
-            patternGV.ReadOnly = false;
             patternGV.ClearSelection();
+            if (e.ProgressPercentage > 0)
+            {
+                patternGV.Invoke(new MethodInvoker(delegate
+                {
+                    patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)e.ProgressPercentage / 100) - 1].Selected = true;
+                    patternGV.FirstDisplayedScrollingRowIndex = patternGV.SelectedRows[0].Index;
+                }));
+                toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
+                    delegate { toggeableKeyStatesVisualizer.Set(e.CurrentToggleableKeyStates); }));
+            }
         }
 
         private void PatternEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            patternPreviewBW.CancelAsync();
+            patternShowController.EndShow();
             if (DialogResult != DialogResult.OK)
             {
                 DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",

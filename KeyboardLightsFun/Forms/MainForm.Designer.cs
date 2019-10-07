@@ -37,7 +37,6 @@
             this.startStopBTN = new System.Windows.Forms.Button();
             this.patternsCB = new System.Windows.Forms.ComboBox();
             this.patternEditBTN = new System.Windows.Forms.Button();
-            this.patternShowBW = new System.ComponentModel.BackgroundWorker();
             this.patternShowPB = new System.Windows.Forms.ProgressBar();
             this.toggeableKeyStatesVisualizer = new YonatanMankovich.KeyboardLightsFun.ToggeableKeyStatesVisualizer();
             ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).BeginInit();
@@ -159,14 +158,6 @@
             this.patternEditBTN.UseVisualStyleBackColor = true;
             this.patternEditBTN.Click += new System.EventHandler(this.patternEditBTN_Click);
             // 
-            // patternShowBW
-            // 
-            this.patternShowBW.WorkerReportsProgress = true;
-            this.patternShowBW.WorkerSupportsCancellation = true;
-            this.patternShowBW.DoWork += new System.ComponentModel.DoWorkEventHandler(this.patternShowBW_DoWork);
-            this.patternShowBW.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.patternShowBW_ProgressChanged);
-            this.patternShowBW.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.patternShowBW_RunWorkerCompleted);
-            // 
             // patternShowPB
             // 
             this.patternShowPB.Location = new System.Drawing.Point(197, 39);
@@ -219,7 +210,6 @@
         private System.Windows.Forms.Button startStopBTN;
         private System.Windows.Forms.ComboBox patternsCB;
         private System.Windows.Forms.Button patternEditBTN;
-        private System.ComponentModel.BackgroundWorker patternShowBW;
         private System.Windows.Forms.ProgressBar patternShowPB;
         private ToggeableKeyStatesVisualizer toggeableKeyStatesVisualizer;
     }

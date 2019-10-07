@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
 {
     public partial class MainForm : Form
     {
-        List<Pattern> patterns = new List<Pattern>();
+        private List<Pattern> patterns = new List<Pattern>();
+        private PatternShowController patternShowController;
+
         public MainForm()
         {
             InitializeComponent();
@@ -43,27 +44,38 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void startStopBTN_Click(object sender, EventArgs e)
         {
-            patternShowBW.RunWorkerAsync(patternsCB.SelectedIndex);
+            if (patternShowController != null && patternShowController.IsShowing())
+                patternShowController.EndShow();
+            else
+            {
+                startStopBTN.Text = "Stop";
+                patternShowController = new PatternShowController(new PatternShow((Pattern)patternsCB.SelectedItem), (int)speedNUD.Value);
+                patternShowController.ProgressReported += PatternShowController_ProgressReported;
+                patternShowController.ShowEnded += PatternShowController_ShowEnded;
+                patternShowController.StartShow();
+            }
         }
 
-        private void patternShowBW_DoWork(object sender, DoWorkEventArgs e)
+        private void PatternShowController_ShowEnded(object sender, EventArgs e)
         {
-            patterns[(int)e.Argument].StartShow(1000 / (int)speedNUD.Value, patternShowBW);
+            startStopBTN.Invoke(new MethodInvoker(delegate { startStopBTN.Text = "Start"; }));
+            toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
+                    delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
         }
 
-        private void patternShowBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void PatternShowController_ProgressReported(object sender, ShowProgressChangedEventArgs e)
         {
-            patternShowPB.Value = e.ProgressPercentage;
-        }
-
-        private void patternShowBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-
+            if (e.ProgressPercentage > 0)
+            {
+                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = e.ProgressPercentage; }));
+                toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
+                    delegate { toggeableKeyStatesVisualizer.Set(e.CurrentToggleableKeyStates); }));
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            patternShowBW.CancelAsync();
+            patternShowController.EndShow();
         }
     }
 }

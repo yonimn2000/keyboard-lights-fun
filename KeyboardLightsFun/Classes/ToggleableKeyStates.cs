@@ -2,7 +2,7 @@
 
 namespace YonatanMankovich.KeyboardLightsFun
 {
-    public class ToggleableKeyStates
+    public struct ToggleableKeyStates
     {
         public bool NumLockState { get; set; }
         public bool CapsLockState { get; set; }
@@ -14,8 +14,6 @@ namespace YonatanMankovich.KeyboardLightsFun
             CapsLockState = capsLockState;
             ScrollLockState = scrollLockState;
         }
-
-        public ToggleableKeyStates() : this(false, false, false) { }
 
         public override string ToString()
         {
