@@ -7,7 +7,7 @@ namespace YonatanMankovich.KeyboardLightsFun
     public partial class MainForm : Form
     {
         private List<Pattern> patterns = new List<Pattern>();
-        private PatternShowController patternShowController;
+        private readonly PatternShowController patternShowController = new PatternShowController();
 
         public MainForm()
         {
@@ -30,6 +30,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void ContiniousCB_CheckedChanged(object sender, EventArgs e)
         {
             repeatsNUD.Enabled = !continiousCB.Checked;
+            patternShowController.IsShowContinuous = continiousCB.Checked;
         }
 
         private void patternEditBTN_Click(object sender, EventArgs e)
@@ -44,32 +45,34 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void startStopBTN_Click(object sender, EventArgs e)
         {
-            if (patternShowController != null && patternShowController.IsShowing())
+            if (patternShowController.IsShowing())
                 patternShowController.EndShow();
             else
             {
                 startStopBTN.Text = "Stop";
-                patternShowController = new PatternShowController(new PatternShow((Pattern)patternsCB.SelectedItem), (int)speedNUD.Value);
+                patternShowController.PatternShow = new PatternShow((Pattern)patternsCB.SelectedItem);
+                patternShowController.Speed = (int)speedNUD.Value;
                 patternShowController.ProgressReported += PatternShowController_ProgressReported;
                 patternShowController.ShowEnded += PatternShowController_ShowEnded;
                 patternShowController.StartShow();
             }
         }
 
-        private void PatternShowController_ShowEnded(object sender, EventArgs e)
+        private void PatternShowController_ShowEnded()
         {
             startStopBTN.Invoke(new MethodInvoker(delegate { startStopBTN.Text = "Start"; }));
             toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
                     delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
+            patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = 0; }));
         }
 
-        private void PatternShowController_ProgressReported(object sender, ShowProgressChangedEventArgs e)
+        private void PatternShowController_ProgressReported(int progressPercentage, ToggleableKeyStates currentToggleableKeyStates)
         {
-            if (e.ProgressPercentage > 0)
+            if (progressPercentage > 0)
             {
-                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = e.ProgressPercentage; }));
+                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = progressPercentage; }));
                 toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
-                    delegate { toggeableKeyStatesVisualizer.Set(e.CurrentToggleableKeyStates); }));
+                    delegate { toggeableKeyStatesVisualizer.Set(currentToggleableKeyStates); }));
             }
         }
 

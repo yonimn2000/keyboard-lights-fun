@@ -186,6 +186,7 @@
             0,
             0,
             0});
+            this.previewSpeedNUD.ValueChanged += new System.EventHandler(this.previewSpeedNUD_ValueChanged);
             // 
             // previewGB
             // 

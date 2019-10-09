@@ -5,9 +5,11 @@
         public Pattern Pattern { get; set; }
         public int CurrentIndex { get; set; } = 0;
 
+        public PatternShow() { }
+
         public PatternShow(Pattern pattern)
         {
-            Pattern = pattern.Clone();
+            Pattern = pattern;
         }
 
         public void ShowNextState()
