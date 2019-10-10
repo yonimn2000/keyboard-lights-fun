@@ -14,6 +14,8 @@ namespace YonatanMankovich.KeyboardLightsFun
             InitializeComponent();
             PatternsFileManager.LoadPatterns(ref patterns);
             UpdatePatternsComboBox();
+            patternShowController.ProgressReported = PatternShowController_ProgressReported;
+            patternShowController.ShowEnded = PatternShowController_ShowEnded;
         }
 
         private void UpdatePatternsComboBox()
@@ -30,7 +32,9 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void ContiniousCB_CheckedChanged(object sender, EventArgs e)
         {
             repeatsNUD.Enabled = !continiousCB.Checked;
-            patternShowController.IsShowContinuous = continiousCB.Checked;
+            patternShowController.Repeats = continiousCB.Checked ? 0 : (int)repeatsNUD.Value;
+            if (patternShowController.IsShowing())
+                patternShowPB.Style = continiousCB.Checked ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
         }
 
         private void patternEditBTN_Click(object sender, EventArgs e)
@@ -51,9 +55,9 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 startStopBTN.Text = "Stop";
                 patternShowController.PatternShow = new PatternShow((Pattern)patternsCB.SelectedItem);
-                patternShowController.Speed = (int)speedNUD.Value;
-                patternShowController.ProgressReported += PatternShowController_ProgressReported;
-                patternShowController.ShowEnded += PatternShowController_ShowEnded;
+                speedNUD_ValueChanged(sender, EventArgs.Empty);
+                repeatsNUD_ValueChanged(sender, EventArgs.Empty);
+                ContiniousCB_CheckedChanged(sender, EventArgs.Empty);
                 patternShowController.StartShow();
             }
         }
@@ -63,22 +67,38 @@ namespace YonatanMankovich.KeyboardLightsFun
             startStopBTN.Invoke(new MethodInvoker(delegate { startStopBTN.Text = "Start"; }));
             toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
                     delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
-            patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = 0; }));
+            patternShowPB.Invoke(new MethodInvoker(delegate
+            {
+                patternShowPB.Value = 0;
+                patternShowPB.Style = ProgressBarStyle.Continuous;
+            }));
         }
 
-        private void PatternShowController_ProgressReported(int progressPercentage, ToggleableKeyStates currentToggleableKeyStates)
+        private void PatternShowController_ProgressReported(int currentPatternProgressPercentage, int totalShowProgressPercentage, ToggleableKeyStates currentToggleableKeyStates)
         {
-            if (progressPercentage > 0)
-            {
-                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = progressPercentage; }));
-                toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
-                    delegate { toggeableKeyStatesVisualizer.Set(currentToggleableKeyStates); }));
-            }
+            if (patternShowController.IsShowContinuous())
+                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Style = ProgressBarStyle.Marquee; }));
+            else
+                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = totalShowProgressPercentage; }));
+            toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
+                delegate { toggeableKeyStatesVisualizer.Set(currentToggleableKeyStates); }));
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            patternShowController.EndShow();
+            if (patternShowController.PatternShow != null)
+                patternShowController.EndShow();
+        }
+
+        private void repeatsNUD_ValueChanged(object sender, EventArgs e)
+        {
+            patternShowController.Repeats = (int)repeatsNUD.Value;
+        }
+
+        private void speedNUD_ValueChanged(object sender, EventArgs e)
+        {
+            patternShowController.Speed = (int)speedNUD.Value;
+            patternShowPB.MarqueeAnimationSpeed = 100 / (int)speedNUD.Value;
         }
     }
 }

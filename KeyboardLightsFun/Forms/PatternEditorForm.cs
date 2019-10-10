@@ -7,7 +7,7 @@ namespace YonatanMankovich.KeyboardLightsFun
     {
         public Pattern Pattern { get; private set; }
 
-        private PatternShowController patternShowController;
+        private readonly PatternShowController patternShowController = new PatternShowController();
         public PatternEditorForm(Pattern pattern)
         {
             Pattern = pattern.Clone();
@@ -21,6 +21,9 @@ namespace YonatanMankovich.KeyboardLightsFun
                 patternGVRow.Cells[2].Value = keyStates.ScrollLockState;
                 patternGV.Rows.Add(patternGVRow);
             }
+            patternShowController.ProgressReported = PatternShowController_ProgressReported;
+            patternShowController.ShowEnded = PatternShowController_ShowEnded;
+            patternShowController.Repeats = 0;
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
@@ -63,16 +66,15 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void previewBTN_Click(object sender, EventArgs e)
         {
-            if (patternShowController != null && patternShowController.IsShowing())
+            if (patternShowController.IsShowing())
                 patternShowController.EndShow();
             else
             {
                 UpdatePattern();
                 previewBTN.Text = "Stop";
                 patternGV.ReadOnly = true;
-                patternShowController = new PatternShowController(new PatternShow(Pattern), (int)previewSpeedNUD.Value, isShowContinuous: true);
-                patternShowController.ProgressReported += PatternShowController_ProgressReported;
-                patternShowController.ShowEnded += PatternShowController_ShowEnded;
+                patternShowController.PatternShow = new PatternShow(Pattern);
+                patternShowController.Speed = (int)previewSpeedNUD.Value;
                 patternShowController.StartShow();
             }
         }
@@ -88,14 +90,14 @@ namespace YonatanMankovich.KeyboardLightsFun
             toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
         }
 
-        private void PatternShowController_ProgressReported(int progressPercentage, ToggleableKeyStates currentToggleableKeyStates)
+        private void PatternShowController_ProgressReported(int currentPatternProgressPercentage, int totalShowProgressPercentage, ToggleableKeyStates currentToggleableKeyStates)
         {
             patternGV.ClearSelection();
-            if (progressPercentage > 0)
+            if (currentPatternProgressPercentage > 0)
             {
                 patternGV.Invoke(new MethodInvoker(delegate
                 {
-                    patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)progressPercentage / 100) - 1].Selected = true;
+                    patternGV.Rows[(int)Math.Round(Pattern.StatesList.Count * (double)currentPatternProgressPercentage / 100) - 1].Selected = true;
                     patternGV.FirstDisplayedScrollingRowIndex = patternGV.SelectedRows[0].Index;
                 }));
                 toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(

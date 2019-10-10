@@ -60,6 +60,7 @@
             0,
             0,
             0});
+            this.repeatsNUD.ValueChanged += new System.EventHandler(this.repeatsNUD_ValueChanged);
             // 
             // speedNUD
             // 
@@ -82,6 +83,7 @@
             0,
             0,
             0});
+            this.speedNUD.ValueChanged += new System.EventHandler(this.speedNUD_ValueChanged);
             // 
             // repeatsLBL
             // 
