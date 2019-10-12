@@ -31,12 +31,6 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            HasNewChanges = false;
-            SavePattern();
-        }
-
-        private void SavePattern()
-        {
             UpdatePattern();
             if (nameTB.Text.Length == 0)
                 MessageBox.Show("The pattern must have a name.");
@@ -113,15 +107,15 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             patternShowController.EndShow();
             if (!HasNewChanges)
-                DialogResult = DialogResult.OK;
-            if (DialogResult != DialogResult.OK)
+                DialogResult = DialogResult.Cancel;
+            if (DialogResult != DialogResult.OK && HasNewChanges)
             {
                 DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 switch (closeDialogResult)
                 {
                     case DialogResult.Cancel: e.Cancel = true; break;
-                    case DialogResult.Yes: SavePattern(); break;
+                    case DialogResult.Yes: saveBTN_Click(sender,EventArgs.Empty); break;
                     case DialogResult.No: DialogResult = DialogResult.Cancel; break;
                 }
             }

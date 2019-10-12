@@ -18,7 +18,8 @@ namespace YonatanMankovich.KeyboardLightsFun
             patternShowController.ShowEnded = PatternShowController_ShowEnded;
 
             continiousCB.Checked = Properties.Settings.Default.IsContinuous;
-            patternsCB.SelectedIndex = Properties.Settings.Default.SelectedShowIndex;
+            if (patternsCB.Items.Count > Properties.Settings.Default.SelectedShowIndex)
+                patternsCB.SelectedIndex = Properties.Settings.Default.SelectedShowIndex;
             repeatsNUD.Value = Properties.Settings.Default.ShowRepeats;
             speedNUD.Value = Properties.Settings.Default.ShowSpeed;
         }
@@ -51,7 +52,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 patterns = patternListForm.Patterns;
                 UpdatePatternsComboBox();
-                if (patternListForm.SelectedIndex >= 0)
+                if (patternListForm.SelectedIndex > 0)
                     patternsCB.SelectedIndex = patternListForm.SelectedIndex;
             }
             patternListForm.Dispose();

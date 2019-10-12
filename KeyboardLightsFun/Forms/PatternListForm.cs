@@ -28,7 +28,6 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             PatternsFileManager.SavePatterns(Patterns);
             SelectedIndex = patternsLB.SelectedIndex;
-            hasNewChanges = false;
             DialogResult = DialogResult.OK;
         }
 
@@ -40,8 +39,8 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void PatternListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!hasNewChanges)
-                DialogResult = DialogResult.OK;
-            if (DialogResult != DialogResult.OK)
+                DialogResult = DialogResult.Cancel;
+            if (DialogResult != DialogResult.OK && hasNewChanges)
             {
                 DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
@@ -60,12 +59,11 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 PatternEditorForm patternEditorForm = new PatternEditorForm(Patterns[patternsLB.SelectedIndex]);
                 DialogResult patternListDialogResult = patternEditorForm.ShowDialog(this);
-                if (patternListDialogResult == DialogResult.OK) // AKA "Save"
+                if (patternListDialogResult == DialogResult.OK && patternEditorForm.HasNewChanges) // AKA "Save"
                 {
                     Patterns[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
                     patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
-                    if (patternEditorForm.HasNewChanges)
-                        hasNewChanges = true;
+                    hasNewChanges = true;
                 }
                 patternEditorForm.Dispose();
             }
@@ -88,12 +86,17 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void addBTN_Click(object sender, EventArgs e)
         {
-            Pattern pattern = new Pattern("Unnamed pattern");
-            patternsLB.Items.Add(pattern);
-            Patterns.Add(pattern);
-            patternsLB.SelectedItem = pattern;
-            editBTN_Click(sender, EventArgs.Empty);
-            hasNewChanges = true;
+            // TODO: Check for duplicates.
+            PatternEditorForm patternEditorForm = new PatternEditorForm(new Pattern("Unnamed Pattern"));
+            DialogResult patternListDialogResult = patternEditorForm.ShowDialog(this);
+            if (patternListDialogResult == DialogResult.OK && patternEditorForm.HasNewChanges) // AKA "Save"
+            {
+                patternsLB.Items.Add(patternEditorForm.Pattern);
+                Patterns.Add(patternEditorForm.Pattern);
+                patternsLB.SelectedItem = patternEditorForm.Pattern;
+                hasNewChanges = true;
+            }
+            patternEditorForm.Dispose();
         }
 
         private void patternsLB_MouseDown(object sender, MouseEventArgs e)

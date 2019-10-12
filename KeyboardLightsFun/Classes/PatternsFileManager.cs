@@ -10,8 +10,9 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public static void SavePatterns(List<Pattern> patterns)
         {
-            using (Stream fs = new FileStream(PathToFile, FileMode.Create))
-                new XmlSerializer(typeof(List<Pattern>)).Serialize(fs, patterns);
+            if (patterns.Count > 0)
+                using (Stream fs = new FileStream(PathToFile, FileMode.Create))
+                    new XmlSerializer(typeof(List<Pattern>)).Serialize(fs, patterns);
         }
 
         public static void LoadPatterns(ref List<Pattern> patterns)
