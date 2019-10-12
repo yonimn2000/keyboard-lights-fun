@@ -73,10 +73,13 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         public void EndShow()
         {
-            timer.Enabled = false;
-            PatternShow.End();
-            repeatCounter = 0;
-            ShowEnded();
+            if (IsShowing())
+            {
+                timer.Enabled = false;
+                PatternShow.End();
+                repeatCounter = 0;
+                ShowEnded();
+            }
         }
     }
 }

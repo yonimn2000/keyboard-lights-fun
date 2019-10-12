@@ -3,11 +3,13 @@ using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
 {
-    internal partial class PatternEditorForm : Form
+    public partial class PatternEditorForm : Form
     {
-        public Pattern Pattern { get; private set; }
+        public Pattern Pattern { get; }
+        public bool HasNewChanges { get; set; } = false;
 
         private readonly PatternShowController patternShowController = new PatternShowController();
+
         public PatternEditorForm(Pattern pattern)
         {
             Pattern = pattern.Clone();
@@ -24,10 +26,12 @@ namespace YonatanMankovich.KeyboardLightsFun
             patternShowController.ProgressReported = PatternShowController_ProgressReported;
             patternShowController.ShowEnded = PatternShowController_ShowEnded;
             patternShowController.Repeats = 0;
+            previewSpeedNUD.Value = Properties.Settings.Default.ShowSpeed;
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
+            HasNewChanges = false;
             SavePattern();
         }
 
@@ -108,6 +112,8 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void PatternEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             patternShowController.EndShow();
+            if (!HasNewChanges)
+                DialogResult = DialogResult.OK;
             if (DialogResult != DialogResult.OK)
             {
                 DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
@@ -129,6 +135,16 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void previewSpeedNUD_ValueChanged(object sender, EventArgs e)
         {
             patternShowController.Speed = (int)previewSpeedNUD.Value;
+        }
+
+        private void patternGV_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            HasNewChanges = true;
+        }
+
+        private void nameTB_KeyUp(object sender, KeyEventArgs e)
+        {
+            HasNewChanges = true;
         }
     }
 }

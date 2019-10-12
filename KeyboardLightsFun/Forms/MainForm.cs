@@ -16,6 +16,11 @@ namespace YonatanMankovich.KeyboardLightsFun
             UpdatePatternsComboBox();
             patternShowController.ProgressReported = PatternShowController_ProgressReported;
             patternShowController.ShowEnded = PatternShowController_ShowEnded;
+
+            continiousCB.Checked = Properties.Settings.Default.IsContinuous;
+            patternsCB.SelectedIndex = Properties.Settings.Default.SelectedShowIndex;
+            repeatsNUD.Value = Properties.Settings.Default.ShowRepeats;
+            speedNUD.Value = Properties.Settings.Default.ShowSpeed;
         }
 
         private void UpdatePatternsComboBox()
@@ -39,12 +44,17 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void patternEditBTN_Click(object sender, EventArgs e)
         {
-            PatternListForm patternListForm = new PatternListForm(patterns);
+            patternShowController.EndShow();
+            PatternListForm patternListForm = new PatternListForm(patterns, patternsCB.SelectedIndex);
             DialogResult patternListDialogResult = patternListForm.ShowDialog(this);
             if (patternListDialogResult == DialogResult.OK) // AKA "Save"
+            {
                 patterns = patternListForm.Patterns;
+                UpdatePatternsComboBox();
+                if (patternListForm.SelectedIndex >= 0)
+                    patternsCB.SelectedIndex = patternListForm.SelectedIndex;
+            }
             patternListForm.Dispose();
-            UpdatePatternsComboBox();
         }
 
         private void startStopBTN_Click(object sender, EventArgs e)
@@ -54,6 +64,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             else
             {
                 startStopBTN.Text = "Stop";
+                patternsCB.Enabled = false;
                 patternShowController.PatternShow = new PatternShow((Pattern)patternsCB.SelectedItem);
                 speedNUD_ValueChanged(sender, EventArgs.Empty);
                 repeatsNUD_ValueChanged(sender, EventArgs.Empty);
@@ -65,8 +76,8 @@ namespace YonatanMankovich.KeyboardLightsFun
         private void PatternShowController_ShowEnded()
         {
             startStopBTN.Invoke(new MethodInvoker(delegate { startStopBTN.Text = "Start"; }));
-            toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
-                    delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
+            patternsCB.Invoke(new MethodInvoker(delegate { patternsCB.Enabled = true; }));
+            toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(delegate { toggeableKeyStatesVisualizer.MakeInactive(); }));
             patternShowPB.Invoke(new MethodInvoker(delegate
             {
                 patternShowPB.Value = 0;
@@ -76,18 +87,25 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void PatternShowController_ProgressReported(int currentPatternProgressPercentage, int totalShowProgressPercentage, ToggleableKeyStates currentToggleableKeyStates)
         {
-            if (patternShowController.IsShowContinuous())
-                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Style = ProgressBarStyle.Marquee; }));
-            else
-                patternShowPB.Invoke(new MethodInvoker(delegate { patternShowPB.Value = totalShowProgressPercentage; }));
+            patternShowPB.Invoke(new MethodInvoker(delegate
+            {
+                if (patternShowController.IsShowContinuous())
+                    patternShowPB.Style = ProgressBarStyle.Marquee;
+                else
+                    patternShowPB.Value = totalShowProgressPercentage;
+            }));
             toggeableKeyStatesVisualizer.Invoke(new MethodInvoker(
                 delegate { toggeableKeyStatesVisualizer.Set(currentToggleableKeyStates); }));
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (patternShowController.PatternShow != null)
-                patternShowController.EndShow();
+            patternShowController.EndShow();
+            Properties.Settings.Default.IsContinuous = continiousCB.Checked;
+            Properties.Settings.Default.SelectedShowIndex = patternsCB.SelectedIndex;
+            Properties.Settings.Default.ShowRepeats = (int)repeatsNUD.Value;
+            Properties.Settings.Default.ShowSpeed = (int)speedNUD.Value;
+            Properties.Settings.Default.Save();
         }
 
         private void repeatsNUD_ValueChanged(object sender, EventArgs e)

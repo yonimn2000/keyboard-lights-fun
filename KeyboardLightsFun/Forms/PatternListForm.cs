@@ -4,11 +4,14 @@ using System.Windows.Forms;
 
 namespace YonatanMankovich.KeyboardLightsFun
 {
-    internal partial class PatternListForm : Form
+    public partial class PatternListForm : Form
     {
         public List<Pattern> Patterns { get; private set; }
+        public int SelectedIndex { get; private set; }
 
-        internal PatternListForm(IList<Pattern> patterns)
+        private bool hasNewChanges = false;
+
+        public PatternListForm(IList<Pattern> patterns, int selectedIndex)
         {
             InitializeComponent();
             DialogResult = DialogResult.Cancel;
@@ -17,14 +20,15 @@ namespace YonatanMankovich.KeyboardLightsFun
             {
                 foreach (Pattern pattern in Patterns)
                     patternsLB.Items.Add(pattern);
-                patternsLB.SelectedIndex = 0;
+                patternsLB.SelectedIndex = selectedIndex;
             }
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            // TODO: Check for duplicates.
             PatternsFileManager.SavePatterns(Patterns);
+            SelectedIndex = patternsLB.SelectedIndex;
+            hasNewChanges = false;
             DialogResult = DialogResult.OK;
         }
 
@@ -35,6 +39,8 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void PatternListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!hasNewChanges)
+                DialogResult = DialogResult.OK;
             if (DialogResult != DialogResult.OK)
             {
                 DialogResult closeDialogResult = MessageBox.Show("Do you want to save the changes?", "Warning",
@@ -50,11 +56,6 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void editBTN_Click(object sender, EventArgs e)
         {
-            EditSelectedPattern();
-        }
-
-        private void EditSelectedPattern()
-        {
             if (patternsLB.SelectedIndex >= 0)
             {
                 PatternEditorForm patternEditorForm = new PatternEditorForm(Patterns[patternsLB.SelectedIndex]);
@@ -63,6 +64,8 @@ namespace YonatanMankovich.KeyboardLightsFun
                 {
                     Patterns[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
                     patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
+                    if (patternEditorForm.HasNewChanges)
+                        hasNewChanges = true;
                 }
                 patternEditorForm.Dispose();
             }
@@ -72,6 +75,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             if (patternsLB.SelectedIndex >= 0)
             {
+                hasNewChanges = true;
                 Patterns.RemoveAt(patternsLB.SelectedIndex);
                 int currentSelectedIndex = patternsLB.SelectedIndex;
                 patternsLB.Items.RemoveAt(patternsLB.SelectedIndex);
@@ -88,12 +92,14 @@ namespace YonatanMankovich.KeyboardLightsFun
             patternsLB.Items.Add(pattern);
             Patterns.Add(pattern);
             patternsLB.SelectedItem = pattern;
-            EditSelectedPattern();
+            editBTN_Click(sender, EventArgs.Empty);
+            hasNewChanges = true;
         }
 
         private void patternsLB_MouseDown(object sender, MouseEventArgs e)
         {
-            if (patternsLB.SelectedItem == null) return;
+            if (patternsLB.SelectedItem == null)
+                return;
             patternsLB.DoDragDrop(patternsLB.SelectedItem, DragDropEffects.Move);
         }
 
@@ -107,6 +113,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             patternsLB.Items.Remove(data);
             Patterns.Insert(index, data);
             patternsLB.Items.Insert(index, data);
+            hasNewChanges = true;
         }
 
         private void patternsLB_DragOver(object sender, DragEventArgs e)

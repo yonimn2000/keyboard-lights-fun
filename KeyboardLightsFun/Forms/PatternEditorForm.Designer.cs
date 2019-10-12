@@ -57,6 +57,7 @@
             this.nameTB.Size = new System.Drawing.Size(125, 20);
             this.nameTB.TabIndex = 0;
             this.nameTB.TextChanged += new System.EventHandler(this.nameTB_TextChanged);
+            this.nameTB.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nameTB_KeyUp);
             // 
             // label1
             // 
@@ -86,6 +87,7 @@
             this.patternGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.patternGV.Size = new System.Drawing.Size(125, 172);
             this.patternGV.TabIndex = 2;
+            this.patternGV.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.patternGV_CellMouseClick);
             this.patternGV.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.patternGV_DefaultValuesNeeded);
             // 
             // NumLockColumn
