@@ -61,8 +61,11 @@ namespace YonatanMankovich.KeyboardLightsFun
                 DialogResult patternListDialogResult = patternEditorForm.ShowDialog(this);
                 if (patternListDialogResult == DialogResult.OK && patternEditorForm.HasNewChanges) // AKA "Save"
                 {
-                    Patterns[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
-                    patternsLB.Items[patternsLB.SelectedIndex] = patternEditorForm.Pattern;
+                    Pattern newPattern = new Pattern(Patterns[patternsLB.SelectedIndex].Name.Equals(patternEditorForm.Pattern.Name)
+                        ? patternEditorForm.Pattern.Name : GetNonDuplicatePatternName(patternEditorForm.Pattern.Name),
+                        patternEditorForm.Pattern.StatesList);
+                    Patterns[patternsLB.SelectedIndex] = newPattern;
+                    patternsLB.Items[patternsLB.SelectedIndex] = newPattern;
                     hasNewChanges = true;
                 }
                 patternEditorForm.Dispose();
@@ -86,17 +89,34 @@ namespace YonatanMankovich.KeyboardLightsFun
 
         private void addBTN_Click(object sender, EventArgs e)
         {
-            // TODO: Check for duplicates.
-            PatternEditorForm patternEditorForm = new PatternEditorForm(new Pattern("Unnamed Pattern"));
+            PatternEditorForm patternEditorForm = new PatternEditorForm(new Pattern(GetNonDuplicatePatternName("Unnamed Pattern")));
             DialogResult patternListDialogResult = patternEditorForm.ShowDialog(this);
             if (patternListDialogResult == DialogResult.OK && patternEditorForm.HasNewChanges) // AKA "Save"
             {
-                patternsLB.Items.Add(patternEditorForm.Pattern);
-                Patterns.Add(patternEditorForm.Pattern);
-                patternsLB.SelectedItem = patternEditorForm.Pattern;
+                Pattern newPattern = new Pattern(GetNonDuplicatePatternName(patternEditorForm.Pattern.Name), patternEditorForm.Pattern.StatesList);
+                patternsLB.Items.Add(newPattern);
+                Patterns.Add(newPattern);
+                patternsLB.SelectedItem = newPattern;
                 hasNewChanges = true;
             }
             patternEditorForm.Dispose();
+        }
+
+        private string GetNonDuplicatePatternName(string name)
+        {
+            string newName = name;
+            int c = 1;
+            while (DoesPatternNameExist(newName))
+                newName = name + ' ' + c++;
+            return newName;
+        }
+
+        private bool DoesPatternNameExist(string name)
+        {
+            foreach (Pattern pattern in Patterns)
+                if (pattern.Name.Equals(name))
+                    return true;
+            return false;
         }
 
         private void patternsLB_MouseDown(object sender, MouseEventArgs e)

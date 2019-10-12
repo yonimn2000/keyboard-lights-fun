@@ -62,7 +62,7 @@ namespace YonatanMankovich.KeyboardLightsFun
         {
             if (patternShowController.IsShowing())
                 patternShowController.EndShow();
-            else
+            else if (patternsCB.SelectedItem != null)
             {
                 startStopBTN.Text = "Stop";
                 patternsCB.Enabled = false;
