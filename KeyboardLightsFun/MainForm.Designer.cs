@@ -46,7 +46,7 @@
             // 
             // repeatsNUD
             // 
-            this.repeatsNUD.Location = new System.Drawing.Point(52, 19);
+            this.repeatsNUD.Location = new System.Drawing.Point(52, 15);
             this.repeatsNUD.Minimum = new decimal(new int[] {
             1,
             0,
@@ -54,7 +54,7 @@
             0});
             this.repeatsNUD.Name = "repeatsNUD";
             this.repeatsNUD.Size = new System.Drawing.Size(39, 20);
-            this.repeatsNUD.TabIndex = 11;
+            this.repeatsNUD.TabIndex = 1;
             this.repeatsNUD.Value = new decimal(new int[] {
             5,
             0,
@@ -64,7 +64,7 @@
             // 
             // speedNUD
             // 
-            this.speedNUD.Location = new System.Drawing.Point(43, 58);
+            this.speedNUD.Location = new System.Drawing.Point(43, 51);
             this.speedNUD.Maximum = new decimal(new int[] {
             10,
             0,
@@ -77,7 +77,7 @@
             0});
             this.speedNUD.Name = "speedNUD";
             this.speedNUD.Size = new System.Drawing.Size(48, 20);
-            this.speedNUD.TabIndex = 12;
+            this.speedNUD.TabIndex = 4;
             this.speedNUD.Value = new decimal(new int[] {
             5,
             0,
@@ -89,20 +89,20 @@
             // 
             this.repeatsLBL.AutoSize = true;
             this.repeatsLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repeatsLBL.Location = new System.Drawing.Point(6, 21);
+            this.repeatsLBL.Location = new System.Drawing.Point(6, 17);
             this.repeatsLBL.Name = "repeatsLBL";
             this.repeatsLBL.Size = new System.Drawing.Size(47, 13);
-            this.repeatsLBL.TabIndex = 13;
+            this.repeatsLBL.TabIndex = 0;
             this.repeatsLBL.Text = "Repeats";
             // 
             // speedLBL
             // 
             this.speedLBL.AutoSize = true;
             this.speedLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.speedLBL.Location = new System.Drawing.Point(6, 60);
+            this.speedLBL.Location = new System.Drawing.Point(6, 53);
             this.speedLBL.Name = "speedLBL";
             this.speedLBL.Size = new System.Drawing.Size(38, 13);
-            this.speedLBL.TabIndex = 14;
+            this.speedLBL.TabIndex = 3;
             this.speedLBL.Text = "Speed";
             // 
             // configGroup
@@ -112,20 +112,20 @@
             this.configGroup.Controls.Add(this.repeatsLBL);
             this.configGroup.Controls.Add(this.speedLBL);
             this.configGroup.Controls.Add(this.continiousCB);
-            this.configGroup.Location = new System.Drawing.Point(12, 6);
+            this.configGroup.Location = new System.Drawing.Point(218, 12);
             this.configGroup.Name = "configGroup";
-            this.configGroup.Size = new System.Drawing.Size(99, 85);
-            this.configGroup.TabIndex = 15;
+            this.configGroup.Size = new System.Drawing.Size(99, 79);
+            this.configGroup.TabIndex = 5;
             this.configGroup.TabStop = false;
             this.configGroup.Text = "Configuration";
             // 
             // continiousCB
             // 
             this.continiousCB.AutoSize = true;
-            this.continiousCB.Location = new System.Drawing.Point(9, 40);
+            this.continiousCB.Location = new System.Drawing.Point(9, 34);
             this.continiousCB.Name = "continiousCB";
             this.continiousCB.Size = new System.Drawing.Size(79, 17);
-            this.continiousCB.TabIndex = 15;
+            this.continiousCB.TabIndex = 2;
             this.continiousCB.Text = "Continuous";
             this.continiousCB.UseVisualStyleBackColor = true;
             this.continiousCB.CheckedChanged += new System.EventHandler(this.ContiniousCB_CheckedChanged);
@@ -133,10 +133,10 @@
             // startStopBTN
             // 
             this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.startStopBTN.Location = new System.Drawing.Point(117, 39);
+            this.startStopBTN.Location = new System.Drawing.Point(12, 39);
             this.startStopBTN.Name = "startStopBTN";
             this.startStopBTN.Size = new System.Drawing.Size(74, 24);
-            this.startStopBTN.TabIndex = 16;
+            this.startStopBTN.TabIndex = 1;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
             this.startStopBTN.Click += new System.EventHandler(this.startStopBTN_Click);
@@ -145,37 +145,38 @@
             // 
             this.patternsCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.patternsCB.FormattingEnabled = true;
-            this.patternsCB.Location = new System.Drawing.Point(117, 12);
+            this.patternsCB.Location = new System.Drawing.Point(12, 12);
             this.patternsCB.Name = "patternsCB";
             this.patternsCB.Size = new System.Drawing.Size(200, 21);
-            this.patternsCB.TabIndex = 17;
+            this.patternsCB.TabIndex = 0;
             // 
             // patternEditBTN
             // 
-            this.patternEditBTN.Location = new System.Drawing.Point(117, 68);
+            this.patternEditBTN.Location = new System.Drawing.Point(12, 68);
             this.patternEditBTN.Name = "patternEditBTN";
             this.patternEditBTN.Size = new System.Drawing.Size(74, 23);
-            this.patternEditBTN.TabIndex = 18;
+            this.patternEditBTN.TabIndex = 2;
             this.patternEditBTN.Text = "Edit patterns";
             this.patternEditBTN.UseVisualStyleBackColor = true;
             this.patternEditBTN.Click += new System.EventHandler(this.patternEditBTN_Click);
             // 
             // patternShowPB
             // 
-            this.patternShowPB.Location = new System.Drawing.Point(197, 39);
+            this.patternShowPB.Location = new System.Drawing.Point(92, 39);
             this.patternShowPB.Name = "patternShowPB";
             this.patternShowPB.Size = new System.Drawing.Size(120, 24);
-            this.patternShowPB.TabIndex = 19;
+            this.patternShowPB.TabIndex = 3;
             // 
             // toggeableKeyStatesVisualizer
             // 
             this.toggeableKeyStatesVisualizer.BackColor = System.Drawing.Color.Transparent;
             this.toggeableKeyStatesVisualizer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toggeableKeyStatesVisualizer.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.toggeableKeyStatesVisualizer.Location = new System.Drawing.Point(197, 68);
+            this.toggeableKeyStatesVisualizer.Location = new System.Drawing.Point(92, 68);
             this.toggeableKeyStatesVisualizer.Name = "toggeableKeyStatesVisualizer";
             this.toggeableKeyStatesVisualizer.Size = new System.Drawing.Size(120, 23);
-            this.toggeableKeyStatesVisualizer.TabIndex = 20;
+            this.toggeableKeyStatesVisualizer.TabIndex = 4;
+            this.toggeableKeyStatesVisualizer.TabStop = false;
             // 
             // MainForm
             // 

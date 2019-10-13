@@ -61,7 +61,7 @@
             this.editBTN.Location = new System.Drawing.Point(3, 3);
             this.editBTN.Name = "editBTN";
             this.editBTN.Size = new System.Drawing.Size(53, 24);
-            this.editBTN.TabIndex = 1;
+            this.editBTN.TabIndex = 0;
             this.editBTN.Text = "Edit";
             this.editBTN.UseVisualStyleBackColor = true;
             this.editBTN.Click += new System.EventHandler(this.editBTN_Click);
@@ -72,7 +72,7 @@
             this.addBTN.Location = new System.Drawing.Point(62, 3);
             this.addBTN.Name = "addBTN";
             this.addBTN.Size = new System.Drawing.Size(54, 24);
-            this.addBTN.TabIndex = 2;
+            this.addBTN.TabIndex = 1;
             this.addBTN.Text = "Add";
             this.addBTN.UseVisualStyleBackColor = true;
             this.addBTN.Click += new System.EventHandler(this.addBTN_Click);
@@ -83,7 +83,7 @@
             this.saveBTN.Location = new System.Drawing.Point(3, 3);
             this.saveBTN.Name = "saveBTN";
             this.saveBTN.Size = new System.Drawing.Size(84, 29);
-            this.saveBTN.TabIndex = 4;
+            this.saveBTN.TabIndex = 0;
             this.saveBTN.Text = "Save";
             this.saveBTN.UseVisualStyleBackColor = true;
             this.saveBTN.Click += new System.EventHandler(this.saveBTN_Click);
@@ -105,7 +105,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(180, 30);
-            this.tableLayoutPanel1.TabIndex = 5;
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // removeBTN
             // 
@@ -113,7 +113,7 @@
             this.removeBTN.Location = new System.Drawing.Point(122, 3);
             this.removeBTN.Name = "removeBTN";
             this.removeBTN.Size = new System.Drawing.Size(55, 24);
-            this.removeBTN.TabIndex = 3;
+            this.removeBTN.TabIndex = 2;
             this.removeBTN.Text = "Remove";
             this.removeBTN.UseVisualStyleBackColor = true;
             this.removeBTN.Click += new System.EventHandler(this.removeBTN_Click);
@@ -132,7 +132,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(180, 35);
-            this.tableLayoutPanel2.TabIndex = 6;
+            this.tableLayoutPanel2.TabIndex = 2;
             // 
             // cancelBTN
             // 
@@ -140,7 +140,7 @@
             this.cancelBTN.Location = new System.Drawing.Point(93, 3);
             this.cancelBTN.Name = "cancelBTN";
             this.cancelBTN.Size = new System.Drawing.Size(84, 29);
-            this.cancelBTN.TabIndex = 5;
+            this.cancelBTN.TabIndex = 1;
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
