@@ -8,6 +8,8 @@ namespace YonatanMankovich.KeyboardLightsFun
         private bool _state;
 
         public Keys Key { get; set; }
+
+        /// <summary> Gets or sets the key state where 'true' means 'locked' and 'false' means 'unlocked'. </summary>
         public bool State
         {
             get => _state;
@@ -24,6 +26,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             RefreshState();
         }
 
+        /// <summary> Refreshes the state of the key by getting it from the system. </summary>
         public void RefreshState()
         {
             _state = Control.IsKeyLocked(Key);
@@ -33,8 +36,8 @@ namespace YonatanMankovich.KeyboardLightsFun
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         public void Toggle()
         {
-            keybd_event((byte)Key, 69, 1, (UIntPtr)0); // Key press
-            keybd_event((byte)Key, 69, 1 | 2, (UIntPtr)0); // Key release
+            keybd_event((byte)Key, 69, 1, (UIntPtr)0); // Key down
+            keybd_event((byte)Key, 69, 1 | 2, (UIntPtr)0); // Key up
             _state = !_state;
         }
     }

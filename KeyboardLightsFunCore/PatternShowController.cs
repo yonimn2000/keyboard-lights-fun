@@ -6,14 +6,23 @@ namespace YonatanMankovich.KeyboardLightsFun
     public class PatternShowController
     {
         /// <summary>
-        /// Gets or sets the number of repeats of the show. Setting this property to a value less than 1 will make the show continuous.
+        /// Gets or sets the number of repeats of the show.
+        /// Setting this property to a value less than 1 will make the show continuous.
         /// </summary>
         public int Repeats { get; set; }
-        public int Speed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the speed of the show - which determines the delay between states
+        /// using the following formula: Delay in milliseconds = 1000 / Speed.
+        /// </summary>
+        public double Speed { get; set; }
 
         public PatternShow PatternShow { get; set; }
 
+        /// <summary> Represents the callback function to call when a show progress is reported. </summary>
         public Action<int, int, ToggleableKeyStates> ProgressReported;
+
+        /// <summary> Represents the callback function to call when the show ends. </summary>
         public Action ShowEnded;
 
         private readonly Timer timer;
@@ -25,13 +34,7 @@ namespace YonatanMankovich.KeyboardLightsFun
             timer.Elapsed += Timer_Elapsed;
             Repeats = 1;
             repeatCounter = 0;
-        }
-
-        public PatternShowController(PatternShow patternShow, int speed = 5, int repeats = 1) : this()
-        {
-            PatternShow = patternShow;
-            Speed = speed;
-            Repeats = repeats;
+            Speed = 5;
         }
 
         public bool IsShowContinuous()

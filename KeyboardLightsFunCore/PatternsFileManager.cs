@@ -8,6 +8,7 @@ namespace YonatanMankovich.KeyboardLightsFun
     {
         public static string PathToFile { get; set; } = "Patterns.klf";
 
+        /// <summary> Saves the patterns into the PathToFile specified file path. </summary>
         public static void SavePatterns(List<Pattern> patterns)
         {
             if (patterns.Count > 0)
@@ -15,6 +16,7 @@ namespace YonatanMankovich.KeyboardLightsFun
                     new XmlSerializer(typeof(List<Pattern>)).Serialize(fs, patterns);
         }
 
+        /// <summary> Loads the patterns from the PathToFile specified file path. </summary>
         public static void LoadPatterns(ref List<Pattern> patterns)
         {
             if (File.Exists(PathToFile))

@@ -44,11 +44,13 @@ namespace YonatanMankovich.KeyboardLightsFun
             scrollLock.RefreshState();
         }
 
+        /// <summary> Saves the current states to restore later, after the show for example. </summary>
         public static void Save()
         {
             savedStates = new ToggleableKeyStates(numLock.State, capsLock.State, scrollLock.State);
         }
 
+        /// <summary> Restores the saved states. </summary>
         public static void Restore()
         {
             numLock.State = savedStates.NumLockState;

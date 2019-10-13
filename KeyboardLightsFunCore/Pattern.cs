@@ -18,8 +18,9 @@ namespace YonatanMankovich.KeyboardLightsFun
             StatesList = new List<ToggleableKeyStates>();
         }
 
-        public Pattern() : this("") { }
+        public Pattern() : this("") { } // Needed for the XML serializer and deserializer.
 
+        /// <summary> Creates and returns a deep copy of the pattern. </summary>
         public Pattern Clone()
         {
             return new Pattern(Name, StatesList);
