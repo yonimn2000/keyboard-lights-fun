@@ -12,7 +12,7 @@ namespace YonatanMankovich.KeyboardLightsFun.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,61 +25,49 @@ namespace YonatanMankovich.KeyboardLightsFun.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int ShowSpeed {
+            get {
+                return ((int)(this["ShowSpeed"]));
+            }
+            set {
+                this["ShowSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ShowRepeats {
+            get {
+                return ((int)(this["ShowRepeats"]));
+            }
+            set {
+                this["ShowRepeats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SelectionIndex {
+        public int SelectedShowIndex {
             get {
-                return ((int)(this["SelectionIndex"]));
+                return ((int)(this["SelectedShowIndex"]));
             }
             set {
-                this["SelectionIndex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public decimal Speed {
-            get {
-                return ((decimal)(this["Speed"]));
-            }
-            set {
-                this["Speed"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public decimal Repeats {
-            get {
-                return ((decimal)(this["Repeats"]));
-            }
-            set {
-                this["Repeats"] = value;
+                this["SelectedShowIndex"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsContinious {
+        public bool IsContinuous {
             get {
-                return ((bool)(this["IsContinious"]));
+                return ((bool)(this["IsContinuous"]));
             }
             set {
-                this["IsContinious"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsReverse {
-            get {
-                return ((bool)(this["IsReverse"]));
-            }
-            set {
-                this["IsReverse"] = value;
+                this["IsContinuous"] = value;
             }
         }
     }

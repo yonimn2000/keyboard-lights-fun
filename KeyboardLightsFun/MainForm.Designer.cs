@@ -28,174 +28,193 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.repeatsUD = new System.Windows.Forms.NumericUpDown();
-            this.speedUD = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.repeatsNUD = new System.Windows.Forms.NumericUpDown();
+            this.speedNUD = new System.Windows.Forms.NumericUpDown();
+            this.repeatsLBL = new System.Windows.Forms.Label();
+            this.speedLBL = new System.Windows.Forms.Label();
             this.configGroup = new System.Windows.Forms.GroupBox();
             this.continiousCB = new System.Windows.Forms.CheckBox();
             this.startStopBTN = new System.Windows.Forms.Button();
-            this.patternsCollection = new System.Windows.Forms.ComboBox();
-            this.ReverseCB = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.repeatsUD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedUD)).BeginInit();
+            this.patternsCB = new System.Windows.Forms.ComboBox();
+            this.patternEditBTN = new System.Windows.Forms.Button();
+            this.patternShowPB = new System.Windows.Forms.ProgressBar();
+            this.toggeableKeyStatesVisualizer = new YonatanMankovich.KeyboardLightsFun.ToggeableKeyStatesVisualizer();
+            ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedNUD)).BeginInit();
             this.configGroup.SuspendLayout();
             this.SuspendLayout();
             // 
-            // repeatsUD
+            // repeatsNUD
             // 
-            this.repeatsUD.Location = new System.Drawing.Point(52, 19);
-            this.repeatsUD.Minimum = new decimal(new int[] {
+            this.repeatsNUD.Location = new System.Drawing.Point(52, 15);
+            this.repeatsNUD.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.repeatsUD.Name = "repeatsUD";
-            this.repeatsUD.Size = new System.Drawing.Size(39, 20);
-            this.repeatsUD.TabIndex = 11;
-            this.repeatsUD.Value = new decimal(new int[] {
+            this.repeatsNUD.Name = "repeatsNUD";
+            this.repeatsNUD.Size = new System.Drawing.Size(39, 20);
+            this.repeatsNUD.TabIndex = 1;
+            this.repeatsNUD.Value = new decimal(new int[] {
             5,
             0,
             0,
             0});
+            this.repeatsNUD.ValueChanged += new System.EventHandler(this.repeatsNUD_ValueChanged);
             // 
-            // speedUD
+            // speedNUD
             // 
-            this.speedUD.Location = new System.Drawing.Point(43, 63);
-            this.speedUD.Maximum = new decimal(new int[] {
+            this.speedNUD.Location = new System.Drawing.Point(43, 51);
+            this.speedNUD.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.speedUD.Minimum = new decimal(new int[] {
+            this.speedNUD.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.speedUD.Name = "speedUD";
-            this.speedUD.Size = new System.Drawing.Size(48, 20);
-            this.speedUD.TabIndex = 12;
-            this.speedUD.Value = new decimal(new int[] {
-            10,
+            this.speedNUD.Name = "speedNUD";
+            this.speedNUD.Size = new System.Drawing.Size(48, 20);
+            this.speedNUD.TabIndex = 4;
+            this.speedNUD.Value = new decimal(new int[] {
+            5,
             0,
             0,
             0});
+            this.speedNUD.ValueChanged += new System.EventHandler(this.speedNUD_ValueChanged);
             // 
-            // label2
+            // repeatsLBL
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Repeats";
+            this.repeatsLBL.AutoSize = true;
+            this.repeatsLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.repeatsLBL.Location = new System.Drawing.Point(6, 17);
+            this.repeatsLBL.Name = "repeatsLBL";
+            this.repeatsLBL.Size = new System.Drawing.Size(47, 13);
+            this.repeatsLBL.TabIndex = 0;
+            this.repeatsLBL.Text = "Repeats";
             // 
-            // label3
+            // speedLBL
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 65);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Speed";
+            this.speedLBL.AutoSize = true;
+            this.speedLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.speedLBL.Location = new System.Drawing.Point(6, 53);
+            this.speedLBL.Name = "speedLBL";
+            this.speedLBL.Size = new System.Drawing.Size(38, 13);
+            this.speedLBL.TabIndex = 3;
+            this.speedLBL.Text = "Speed";
             // 
             // configGroup
             // 
-            this.configGroup.Controls.Add(this.repeatsUD);
-            this.configGroup.Controls.Add(this.speedUD);
-            this.configGroup.Controls.Add(this.label2);
-            this.configGroup.Controls.Add(this.label3);
+            this.configGroup.Controls.Add(this.repeatsNUD);
+            this.configGroup.Controls.Add(this.speedNUD);
+            this.configGroup.Controls.Add(this.repeatsLBL);
+            this.configGroup.Controls.Add(this.speedLBL);
             this.configGroup.Controls.Add(this.continiousCB);
-            this.configGroup.Location = new System.Drawing.Point(12, 6);
+            this.configGroup.Location = new System.Drawing.Point(218, 12);
             this.configGroup.Name = "configGroup";
-            this.configGroup.Size = new System.Drawing.Size(99, 91);
-            this.configGroup.TabIndex = 15;
+            this.configGroup.Size = new System.Drawing.Size(99, 79);
+            this.configGroup.TabIndex = 5;
             this.configGroup.TabStop = false;
             this.configGroup.Text = "Configuration";
             // 
             // continiousCB
             // 
             this.continiousCB.AutoSize = true;
-            this.continiousCB.Location = new System.Drawing.Point(9, 40);
+            this.continiousCB.Location = new System.Drawing.Point(9, 34);
             this.continiousCB.Name = "continiousCB";
             this.continiousCB.Size = new System.Drawing.Size(79, 17);
-            this.continiousCB.TabIndex = 15;
+            this.continiousCB.TabIndex = 2;
             this.continiousCB.Text = "Continuous";
             this.continiousCB.UseVisualStyleBackColor = true;
-            this.continiousCB.CheckedChanged += new System.EventHandler(this.continiousCB_CheckedChanged);
+            this.continiousCB.CheckedChanged += new System.EventHandler(this.ContiniousCB_CheckedChanged);
             // 
             // startStopBTN
             // 
-            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startStopBTN.Location = new System.Drawing.Point(117, 62);
+            this.startStopBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.startStopBTN.Location = new System.Drawing.Point(12, 39);
             this.startStopBTN.Name = "startStopBTN";
-            this.startStopBTN.Size = new System.Drawing.Size(99, 35);
-            this.startStopBTN.TabIndex = 16;
+            this.startStopBTN.Size = new System.Drawing.Size(74, 24);
+            this.startStopBTN.TabIndex = 1;
             this.startStopBTN.Text = "Start";
             this.startStopBTN.UseVisualStyleBackColor = true;
             this.startStopBTN.Click += new System.EventHandler(this.startStopBTN_Click);
             // 
-            // patternsCollection
+            // patternsCB
             // 
-            this.patternsCollection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.patternsCollection.FormattingEnabled = true;
-            this.patternsCollection.Items.AddRange(new object[] {
-            "Random",
-            "All"});
-            this.patternsCollection.Location = new System.Drawing.Point(117, 12);
-            this.patternsCollection.Name = "patternsCollection";
-            this.patternsCollection.Size = new System.Drawing.Size(99, 21);
-            this.patternsCollection.TabIndex = 17;
-            this.patternsCollection.SelectedIndexChanged += new System.EventHandler(this.patternsCollection_SelectedIndexChanged);
+            this.patternsCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.patternsCB.FormattingEnabled = true;
+            this.patternsCB.Location = new System.Drawing.Point(12, 12);
+            this.patternsCB.Name = "patternsCB";
+            this.patternsCB.Size = new System.Drawing.Size(200, 21);
+            this.patternsCB.TabIndex = 0;
             // 
-            // ReverseCB
+            // patternEditBTN
             // 
-            this.ReverseCB.AutoSize = true;
-            this.ReverseCB.Enabled = false;
-            this.ReverseCB.Location = new System.Drawing.Point(117, 39);
-            this.ReverseCB.Name = "ReverseCB";
-            this.ReverseCB.Size = new System.Drawing.Size(103, 17);
-            this.ReverseCB.TabIndex = 18;
-            this.ReverseCB.Text = "Reverse Pattern";
-            this.ReverseCB.UseVisualStyleBackColor = true;
+            this.patternEditBTN.Location = new System.Drawing.Point(12, 68);
+            this.patternEditBTN.Name = "patternEditBTN";
+            this.patternEditBTN.Size = new System.Drawing.Size(74, 23);
+            this.patternEditBTN.TabIndex = 2;
+            this.patternEditBTN.Text = "Edit patterns";
+            this.patternEditBTN.UseVisualStyleBackColor = true;
+            this.patternEditBTN.Click += new System.EventHandler(this.patternEditBTN_Click);
+            // 
+            // patternShowPB
+            // 
+            this.patternShowPB.Location = new System.Drawing.Point(92, 39);
+            this.patternShowPB.Name = "patternShowPB";
+            this.patternShowPB.Size = new System.Drawing.Size(120, 24);
+            this.patternShowPB.TabIndex = 3;
+            // 
+            // toggeableKeyStatesVisualizer
+            // 
+            this.toggeableKeyStatesVisualizer.BackColor = System.Drawing.Color.Transparent;
+            this.toggeableKeyStatesVisualizer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toggeableKeyStatesVisualizer.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toggeableKeyStatesVisualizer.Location = new System.Drawing.Point(92, 68);
+            this.toggeableKeyStatesVisualizer.Name = "toggeableKeyStatesVisualizer";
+            this.toggeableKeyStatesVisualizer.Size = new System.Drawing.Size(120, 23);
+            this.toggeableKeyStatesVisualizer.TabIndex = 4;
+            this.toggeableKeyStatesVisualizer.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(225, 107);
-            this.Controls.Add(this.ReverseCB);
-            this.Controls.Add(this.patternsCollection);
+            this.ClientSize = new System.Drawing.Size(325, 101);
+            this.Controls.Add(this.toggeableKeyStatesVisualizer);
+            this.Controls.Add(this.patternShowPB);
+            this.Controls.Add(this.patternEditBTN);
+            this.Controls.Add(this.patternsCB);
             this.Controls.Add(this.configGroup);
             this.Controls.Add(this.startStopBTN);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Lights";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.repeatsUD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedUD)).EndInit();
+            this.Text = "Keyboard Lights Fun";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.repeatsNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedNUD)).EndInit();
             this.configGroup.ResumeLayout(false);
             this.configGroup.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.NumericUpDown repeatsUD;
-        private System.Windows.Forms.NumericUpDown speedUD;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown repeatsNUD;
+        private System.Windows.Forms.NumericUpDown speedNUD;
+        private System.Windows.Forms.Label repeatsLBL;
+        private System.Windows.Forms.Label speedLBL;
         private System.Windows.Forms.GroupBox configGroup;
         private System.Windows.Forms.CheckBox continiousCB;
         private System.Windows.Forms.Button startStopBTN;
-        private System.Windows.Forms.ComboBox patternsCollection;
-        private System.Windows.Forms.CheckBox ReverseCB;
+        private System.Windows.Forms.ComboBox patternsCB;
+        private System.Windows.Forms.Button patternEditBTN;
+        private System.Windows.Forms.ProgressBar patternShowPB;
+        private ToggeableKeyStatesVisualizer toggeableKeyStatesVisualizer;
     }
 }
 
