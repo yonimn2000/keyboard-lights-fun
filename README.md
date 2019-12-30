@@ -1,6 +1,6 @@
 # Keyboard Lights Fun
 
-A simple tool to toggle Num, Caps, and Scroll lock lights in different patterns.
+A simple tool to toggle Num, Caps, and Scroll lock lights on the keyboard in different patterns.
 
 The tool includes a pattern editor in which patterns can easily be created and modified.
 
