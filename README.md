@@ -8,8 +8,8 @@ The release includes 11 premade patterns.
 
 ## Screenshots
 
-![screenshot1](media/screenshot1.png)
+![Main Screen](media/main.gif)
 
-![screenshot2](media/screenshot2.png)
+![List Screen](media/list.png)
 
-![screenshot3](media/screenshot3.png)
+![Editor Screen](media/editor.gif)
