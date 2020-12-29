@@ -6,6 +6,10 @@ The tool includes a pattern editor in which patterns can easily be created and m
 
 The release includes 11 premade patterns.
 
+## In Action
+
+![Keyboard](media/keyboard.gif)
+
 ## Screenshots
 
 ![Main Screen](media/main.gif)
